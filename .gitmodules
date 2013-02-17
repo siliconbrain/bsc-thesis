@@ -1,0 +1,3 @@
+[submodule "incquery"]
+	path = incquery
+	url = git://git.eclipse.org/gitroot/incquery/org.eclipse.incquery.git
