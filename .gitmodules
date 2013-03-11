@@ -1,3 +1,3 @@
 [submodule "incquery"]
 	path = incquery
-	url = git@github.com:siliconbrain/EMF-IncQuery.git
+	url = git@github.com:siliconbrain/org.eclipse.incquery.git
