@@ -2,7 +2,58 @@
 \chapter*{Bevezető}\addcontentsline{toc}{chapter}{Bevezető}
 %----------------------------------------------------------------------------
 
-A bevezető tartalmazza a diplomaterv-kiírás elemzését, történelmi előzményeit, a feladat indokoltságát (a motiváció leírását), az eddigi megoldásokat, és ennek tükrében a hallgató megoldásának összefoglalását.
+% A bevezető tartalmazza a diplomaterv-kiírás elemzését, történelmi előzményeit, a feladat indokoltságát (a motiváció leírását), az eddigi megoldásokat, és ennek tükrében a hallgató megoldásának összefoglalását.
 
-A bevezető szokás szerint a diplomaterv felépítésével záródik, azaz annak rövid leírásával, hogy melyik fejezet mivel foglalkozik.
+Napjainkra a szoftverek összetettsége jelentősen megnőtt az egyre fejlettebb hardverek adta lehetőségek és a felhasználók olykor végeláthatatlan igényei miatt.
+Ezen komplexitás velejárója, hogy nem csak a szoftverek tervezése és készítése, de néha már a használatuk is komoly kihívást jelenthet.
+Ez utóbbi fokozottan igaz, amikor szoftverfejlesztőként a különböző keretrendszereket és függvénykönyvtárakat olyan interfészeken keresztül kell kezelnünk, melyek tervezésekor nem a felhasználók -- programozók, IT szakemberek -- kényelme, hanem a számítógép általi gyors feldolgozás és végrehajtás, alacsony memória- és tárigény voltak az elsődleges szempontok.
+
+A mérnöki diszciplínákban szinte mindenhol alkalmaznak matematikai vagy egyéb modelleket a komplex problémák leírására, vizualizálására.
+Ezek a modellek azáltal segítik a mérnökök munkáját, hogy a világnak csak a problémához szorosan kapcsolódó, a megoldás szempontjából fontos részeit veszik figyelembe, írják le vagy jelenítik meg.
+Nem meglepő módon, az informatika sem képez kivétel ez alól.
+
+A \emph{modell-vezérelt szoftverfejlesztés} (model-driven software development, \gls{MDSD}) egy olyan, manapság széles körben elterjedt \gls{CASE} technika, mely megkönnyíti mind a szoftverek előállítását, mind azok későbbi továbbfejlesztését, karbantartását \cite{MDSD:TEM06}.
+A technika alkalmazása során a fejlesztők először az adott feladat alapján egy domén-specifikus, magas szintű, platformfüggetlen \emph{modellt} hoznak létre, amely a probléma valós vagy elképzelt rendszerének egy egyszerűsített reprezentációja.
+Ezután az elkészült modellt különböző szoftvereszközök segítségével \emph{transzformálják} más alakokba, például dokumentációvá, grafikonokká, programkóddá, végrehajtható programokká vagy egyéb modellekké.
+A szoftveres, automatizált transzformáció nagy előnye, hogy a fejlesztők által meghatározott módon képes a modell több kapcsolódó reprezentációja közti -- néhány esetben akár kétirányú -- konzisztencia megőrzésére.
+Teszi mindezt hosszútávon kevesebb befektetett munkával, a kiküszöbölt hibalehetőségek számáról nem is beszélve.
+Emellett az egyes transzformációk -- összeillő ki- és bemenetek mentén -- össze is kapcsolhatóak, így egyszerűbb transzformációkból egész transzformációs csővezetékeket (transformation pipeline) hozhatunk létre.
+
+A modelltranszformációk egy speciális esete a \emph{lekérdezés}, mely a modell reprezentációján nem változtat, viszont csak azon elemeit adja vissza, melyek kielégítenek egy -- akár többszörösen összetett -- feltételt.
+
+A modellek készítése és manipulálása, és a transzformációk leírása is temérdek lehetőséget ad az embernek hibák elkövetésére.
+Épp ezért, ezeket a munkafolyamatokat keretrendszerek, szöveges és grafikus \cite{Gyorok13} leírónyelvek, néha egész fejlesztői környezetek támogatják.
+
+Ilyen eszközegyüttest kínál például az Eclipse Modeling Project \cite{EclipseOrgModeling}, melynek egyik legfontosabb része az Eclipse Modeling Framework (röviden \gls{EMF}).
+Az \gls{EMF} egy, az iparban széles körben elterjedt, modell alapú szoftverfejlesztést támogató keretrendszer.
+Erre a platformra épít az EMF-IncQuery keretrendszer, amely \gls{EMF} modellek felett teszi lehetővé gráf lekérdezések deklaratív módon történő definiálását és hatékony végrehajtását.
+Az EMF-IncQuery fejlesztését a Méréstechnika és Információs Rendszerek Tanszékének Hibatűrő Rendszerek Kutatócsoportja kezdte meg, de ma már az Eclipse Foundation gondozásában álló szabad forrású szoftver.\todo{ezt értelmesebbre lehetne fogalmazni}
+
+Az EMF-IncQuery számára történő lekérdezés-specifikációk megfogalmazásának támogatására, illetve ezen deklaratív specifikációk végrehajtásának gyorsítására is bevethetjük a statikus analízis módszerét.
+A \emph{statikus analízis} egy gyűjtőfogalom a fejlesztési időben rendelkezésre álló információk alapján elvégezhető formális vizsgálatok felett.
+Leggyakoribb megvalósítási formái a modell ellenőrzés\footnote{A modell ellenőrzésnek -- a neve ellenére -- viszonylag kevés köze van a dolgozat témájához.}\todo{ref Majzik/formális módszerekre}, adatfolyam analízis, absztrakt interpretáció, szimbolikus végrehajtás és a Hoare logika.
+
+% statikus: fejlesztési időben eldönthető
+% megvalósítások: modell ellenőrzés (nem az, amit én csináltam!), adat-folyam analízis, absztrakt interpretáció, szimbolikus végrehajtás
+% !! Statikus analízissel leggyakrabban a biztonság-kritikus rendszereknél (repülés, nukleáris, orvosi) találkozunk.
+% !! A statikus _kód_ analízis kiegészítője a dinamikus kód analízis.
+% !! Modell ellenőrzésnél nem kell a kódot ellenőrizni, hanem egy absztraktabb modellt ellenőrizhetjünk -- aminek a szemantikája egyszerűbb az ellenőrzés szempontjából -- mivel feltételezzük, hogy a modell -> kód trafó helyes (értsd: szemantika őrző).
+
+% Emellett a deklaratív lekérdezés-specifikáció végrehajtása teljesítményszempontból gyakran kritikus lehet, amelyet a kialakított kiértékelési terv döntően befolyásol. A lekérdezések és a meta-modellek statikus analízise azonban számos lehetőséget tartogat, amelyek hibadetektálás formájában támogathatják a lekérdezések fejlesztési folyamatát, valamint hasznára válhatnak a nagyobb hatékonyságú végrehajtási stratégiákra törekvő kiértékelőmotornak is.
+
+%* point form summary of what problems I chose to solve *(what were my goals)*
+%  * and why/how do I think static analysis will help
+
+% A bevezető szokás szerint a diplomaterv felépítésével záródik, azaz annak rövid leírásával, hogy melyik fejezet mivel foglalkozik.
+
+%* per chapter content layout
+Az 1. fejezet az EMF-IncQuery lekérdezőnyelvéből statikusan kinyerhető információk fejlesztési időben történő felhasználását elemzi, ...konkrétan a változók felhasználásának számát..., míg a 2. fejezetben az információk futásidejű vizsgálatokban való alkalmazását
+
+% A lekérdezések megfogalmazása önmagában is kihívásokat jelentő mérnöki feladat, mely során fennáll az emberi hibák lehetősége. Emellett a deklaratív lekérdezés-specifikáció végrehajtása teljesítményszempontból gyakran kritikus lehet, amelyet a kialakított kiértékelési terv döntően befolyásol. A lekérdezések és a meta-modellek statikus analízise azonban számos lehetőséget tartogat, amelyek hibadetektálás formájában támogathatják a lekérdezések fejlesztési folyamatát, valamint hasznára válhatnak a nagyobb hatékonyságú végrehajtási stratégiákra törekvő kiértékelőmotornak is.
+% Az Eclipse Modeling Framework egy, az iparban is széles körben használt, modell alapú fejlesztést támogató platform. Az erre épülő, a Hibatűrő Rendszerek Kutatócsoport által fejlesztett EMF-IncQuery keretrendszer pedig modell-lekérdezések deklaratív módon történő definiálását és hatékony végrehajtását teszi lehetővé.
+% A hallgató feladatának a következőkre kell kiterjednie:
+% * Mutassa be a modell-lekérdezések fogalmát az EMF-IncQuery keretrendszeren keresztül.
+% * Elemezze az EMF-IncQuery lekérdezőnyelvét statikus elemezhetőség szempontjából, mutasson példát fejlesztési ill. futási időben hasznosítható statikus vizsgálatokra.
+% * Egészítse ki az EMF-IncQuery keretrendszert olyan komponensekkel, amelyek elvégzik ill. hasznosítják ezen statikus vizsgálatokat.
+% * Demonstrálja az elkészült megoldás hasznosulását esettanulmányon keresztül.
 

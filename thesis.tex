@@ -2,25 +2,31 @@
 %\documentclass[11pt,a4paper,twoside,openright]{report}  % Duplex
 
 %\PassOptionsToPackage{chapternumber=Huordinal}{magyar.ldf}
-\usepackage{t1enc}
 \usepackage[utf8]{inputenc}
+\usepackage{t1enc}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage[english,magyar]{babel}
+\usepackage{hyperref}
 \usepackage{datetime}
 \usepackage{enumerate}
 \usepackage[thmmarks]{ntheorem}
 \usepackage{graphics}
 \usepackage{epsfig}
 \usepackage{listings}
-\usepackage{color}
 %\usepackage{fancyhdr}
+\usepackage{float}
 \usepackage{lastpage}
 \usepackage{anysize}
 \usepackage{sectsty}
 \usepackage{setspace}  % Ettol a tablazatok, abrak, labjegyzetek maradnak 1-es sorkozzel!
 \usepackage[hang]{caption}
-\usepackage{hyperref}
+\usepackage{xcolor}  %\usepackage{color}
+\usepackage[normalem]{ulem} % "normalem" option keeps the package from redefining \emph
+\usepackage[toc]{glossaries}
+\usepackage[]{todonotes}  % use "disable" option to hide notes
+\usepackage{tabu}
+\usepackage{titlesec}
 
 %--------------------------------------------------------------------------------------
 % Main variables
@@ -31,6 +37,7 @@
 \newcommand{\vikcim}{Modell-lekérdezések statikus analízise}
 \newcommand{\viktanszek}{Méréstechnika és Információs Rendszerek Tanszék}
 \newcommand{\vikdoktipus}{Szakdolgozat}
+\newcommand{\vikkulcsszavak}{}
 
 %--------------------------------------------------------------------------------------
 % Page layout setup
@@ -53,47 +60,46 @@
 \singlespacing
 \frenchspacing
 
-%---------------------------------------------------------------------------
-% This makes Chapter go away, so
-%   Chapter 1
-%   My first chapter
-% becomes
-%   1. My first chapter
-%
-\makeatletter
-\renewcommand{\@makechapterhead}[1]{%
-\vspace*{50 pt}%
-{\setlength{\parindent}{0pt} \raggedright \normalfont
-\bfseries\Huge\thechapter.\ #1
-\par\nobreak\vspace{40 pt}}}
-\makeatother
-%---------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------
+%   Setup chapter header format
+%--------------------------------------------------------------------------------------
+\titleformat{\chapter}
+  {\normalfont\LARGE\bfseries}{\thechapter.}{1em}{}
 
 %--------------------------------------------------------------------------------------
 %	Setup hyperref package
 %--------------------------------------------------------------------------------------
 \hypersetup{
-    bookmarks=true,            % show bookmarks bar?
-    unicode=false,             % non-Latin characters in Acrobat’s bookmarks
-    pdftitle={\vikcim},        % title
-    pdfauthor={\vikszerzo},    % author
-    pdfsubject={\vikdoktipus}, % subject of the document
-    pdfcreator={\vikszerzo},   % creator of the document
-    pdfproducer={Producer},    % producer of the document
-    pdfkeywords={keywords},    % list of keywords
-    pdfnewwindow=true,         % links in new window
-    colorlinks=true,           % false: boxed links; true: colored links
-    linkcolor=black,           % color of internal links
-    citecolor=black,           % color of links to bibliography
-    filecolor=black,           % color of file links
-    urlcolor=black             % color of external links
+    bookmarks=true,                % show bookmarks bar?
+    unicode=true,                  % non-Latin characters in Acrobat’s bookmarks
+    pdftitle={\vikcim},            % title
+    pdfauthor={\vikszerzo},        % author
+    pdfsubject={\vikdoktipus},     % subject of the document
+    pdfcreator={\vikszerzo},       % creator of the document
+    pdfkeywords={\vikkulcsszavak}, % list of keywords
+    pdfnewwindow=true,             % links in new window
+    colorlinks=true,               % false: boxed links; true: colored links
+    linkcolor=black,               % color of internal links
+    citecolor=black,               % color of links to bibliography
+    filecolor=black,               % color of file links
+    urlcolor=blue                  % color of external links
 }
 
 %--------------------------------------------------------------------------------------
 % Set up listings
 %--------------------------------------------------------------------------------------
+\makeatletter
+\def\warningwave{\bgroup \markoverwith{\lower3.5\p@\hbox{\sixly \textcolor{orange}{\char58}}}\ULon}
+\font\sixly=lasy5 % does not re-load if already loaded, so no memory problem.
+\makeatother
+
+\makeatletter
+\def\errorwave{\bgroup \markoverwith{\lower3.5\p@\hbox{\sixly \textcolor{red}{\char58}}}\ULon}
+\font\sixly=lasy5 % does not re-load if already loaded, so no memory problem.
+\makeatother
+
 \lstset{
-	basicstyle=\scriptsize\ttfamily, % print whole listing small
+	basicstyle=\normalsize\ttfamily, % print whole listing small
 	keywordstyle=\color{black}\bfseries\underbar, % underlined bold black keywords
 	identifierstyle=, 					% nothing happens
 	commentstyle=\color{white}, % white comments
@@ -102,9 +108,11 @@
 	aboveskip=3pt,
 	belowskip=3pt,
 	columns=fixed,
-	backgroundcolor=\color{lightgray},
+	backgroundcolor=\color{white},
 	extendedchars=true,
 	literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ö}{{\"o}}1 {ő}{{\H{o}}}1 {ú}{{\'u}}1 {ü}{{\"u}}1 {ű}{{\H{u}}}1,
+	moredelim=[is][\warningwave]{w_}{_},
+	moredelim=[is][\errorwave]{e_}{_},
 } 		
 \def\lstlistingname{lista}	
 
@@ -117,8 +125,8 @@
 \newcommand{\figref}[1]{\ref{fig:#1}.}
 \renewcommand{\eqref}[1]{(\ref{eq:#1})}
 \newcommand{\listref}[1]{\ref{listing:#1}.}
-\newcommand{\sectref}[1]{\ref{sect:#1}}
 \newcommand{\tabref}[1]{\ref{tab:#1}.}
+\newcommand{\sectref}[1]{\ref{sect:#1}}
 
 \DeclareMathOperator*{\argmax}{arg\,max}
 %\DeclareMathOperator*[1]{\floor}{arg\,max}
@@ -133,12 +141,16 @@
 	declaration,%
 	abstract,%
 	introduction,%
-	chapter1,%
-	chapter2,%
-	chapter3,%
+	techprim,%
+	varusage,%
+	funcdep,%
+	summary,%
 	acknowledgement,%
 	appendices,%
 }
+
+\makeglossaries
+\loadglsentries{glossary}
 
 %--------------------------------------------------------------------------------------
 %	Setup captions
@@ -168,15 +180,17 @@ aboveskip=10pt}
 \include{declaration}
 \include{abstract}
 \include{introduction}
-\include{chapter1}
-\include{chapter2}
-\include{chapter3}
+\include{techprim}
+\include{varusage}
+\include{funcdep}
+\include{summary}
 
 \listoffigures\addcontentsline{toc}{chapter}{Ábrák jegyzéke}
-%\listoftables\addcontentsline{toc}{chapter}{Táblázatok jegyzéke}
+\listoftables\addcontentsline{toc}{chapter}{Táblázatok jegyzéke}
+\printglossary[title=Rövidítések jegyzéke]
 
 \bibliography{bibliography}\addcontentsline{toc}{chapter}{Irodalomjegyzék}
-\bibliographystyle{plain}
+\bibliographystyle{huszak}
 
 \label{page:last}
 \end{document}
