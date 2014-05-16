@@ -13,6 +13,7 @@
 \usepackage[thmmarks]{ntheorem}
 \usepackage{graphics}
 \usepackage{epsfig}
+\usepackage{diagbox}
 \usepackage{listings}
 %\usepackage{fancyhdr}
 \usepackage{float}
@@ -27,6 +28,7 @@
 \usepackage[]{todonotes}  % use "disable" option to hide notes
 \usepackage{tabu}
 \usepackage{titlesec}
+\usepackage{pbox}
 
 %--------------------------------------------------------------------------------------
 % Main variables
@@ -127,6 +129,8 @@
 \newcommand{\listref}[1]{\ref{listing:#1}.}
 \newcommand{\tabref}[1]{\ref{tab:#1}.}
 \newcommand{\sectref}[1]{\ref{sect:#1}}
+\newcommand{\CPP}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny\bf +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny\bf +}}
+\newcommand{\CSharp}{C\nolinebreak\hspace{-.05em}\raisebox{.6ex}{\tiny\bf \#}}
 
 \DeclareMathOperator*{\argmax}{arg\,max}
 %\DeclareMathOperator*[1]{\floor}{arg\,max}
@@ -138,6 +142,7 @@
 \title{\vikcim}
 \includeonly{
 	titlepage,%
+	acknowledgement,%
 	declaration,%
 	abstract,%
 	introduction,%
@@ -145,7 +150,6 @@
 	varusage,%
 	funcdep,%
 	summary,%
-	acknowledgement,%
 	appendices,%
 }
 
@@ -176,6 +180,7 @@ aboveskip=10pt}
 \pagenumbering{arabic}
 \onehalfspacing
 \include{titlepage}
+\include{acknowledgement}
 \tableofcontents\vfill
 \include{declaration}
 \include{abstract}
@@ -190,7 +195,7 @@ aboveskip=10pt}
 \printglossary[title=Rövidítések jegyzéke]
 
 \bibliography{bibliography}\addcontentsline{toc}{chapter}{Irodalomjegyzék}
-\bibliographystyle{huszak}
+\bibliographystyle{huplain}
 
 \label{page:last}
 \end{document}

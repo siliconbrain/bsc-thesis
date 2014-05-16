@@ -1,49 +1,56 @@
 %----------------------------------------------------------------------------
 \chapter{Változók használatának vizsgálata}
+\label{chap:varUsage}
 %----------------------------------------------------------------------------
 %
 % Bevezető
 %
-
 Az EMF-IncQuery lekérdezőnyelve -- más program- és leírónyelvekhez hasonlóan -- több olyan problémának is áldozatul esik, melyek statikus analízis segítségével hamar felismerhetőek, és a fejlesztők az analízis eredményét jó hatékonysággal használhatják fel az azonosított problémák orvoslására.
-Az egyik leggyakoribb ilyen kellemetlenség a változók nevének (azonosítójának) nem konzisztens használata -- magyarul elírása -- a kód különböző pontjaiban, mellyel szinte minden informatikus találkozott már valamilyen formában.
-Az EMF-IncQuery lekérdezőnyelvének sajátossága miatt -- miszerint a lokális változókat nem szükséges előre deklarálni, mivel ezt a környezet impliciten, azok első előfordulásakor megteszi a fejlesztő helyett -- a kódban található kifejezések ilyen gépelési hibák elfordulása mellett is mindig szintaktikailag helyesek maradnak. Így az ez által okozott hibák felderítéséhez a szemantikának, a kód jelentésének vizsgálatára van szükség, különben a hibára csak a lekérdezések futtatása után derülhet fény, melyre a rossz találati eredmények utalnak, és a hiba valódi oka még ekkor sem mindig egyértelmű.
-
+Az egyik leggyakoribb ilyen kellemetlenség a változók nevének (azonosítójának) nem konzisztens használata -- magyarul elírása -- a kód különböző pontjain, mellyel szinte minden informatikus találkozott már valamilyen formában.
+Az lekérdezőnyelv sajátossága miatt -- miszerint a lokális változókat nem szükséges előre deklarálni, mivel ezt a környezet impliciten, azok első előfordulásakor megteszi a fejlesztő helyett -- a kódban található kifejezések ilyen gépelési hibák elfordulása mellett is mindig szintaktikailag helyesek maradnak.
+Így az ez által okozott hibák felderítéséhez a szemantikának, a kód jelentésének vizsgálatára van szükség, különben a hibára csak a lekérdezések futtatása után derülhet fény, melyre a rossz találati eredmények utalnak, és a hiba valódi oka még ekkor sem mindig egyértelmű.
 
 %----------------------------------------------------------------------------
-
 \section{Tervezés}
 
 Az ilyen típusú ellenőrzés messze nem példa nélküli, más programozási nyelveknél és fejlesztőkörnyezeteknél gyakran találkozhatunk vele \emph{``nem használt változó detektálás''} néven.
 Ám mivel az EMF-IncQuery lekérdezőnyelvében a változó fogalma kissé eltér a legtöbb nyelvben megszokottól, más környezetek megoldásai nem alkalmazhatóak egy az egyben.
 A lekérdezőnyelv mintái esetében kétféle változóról beszélhetünk:
 \begin{itemize}
-
-  \item a \emph{szimbolikus változók}, melyek egy minta paraméterei, illetve
-  \item a \emph{lokális változók}, amelyek egy mintának egy bizonyos törzsén belül fordulnak csak elő.
+    \item a \emph{szimbolikus változók}, melyek egy minta paraméterei, illetve
+    \item a \emph{lokális változók}, amelyek egy mintának egy bizonyos törzsén belül fordulnak csak elő.
 \end{itemize}
-Ezek a változók leginkább az elsőrendű logika \cite{wiki:FirstOrderLogic}, illetve az ezen alapuló programnyelvek (pl. Prolog \cite{wiki:Prolog}, Datalog \cite{wiki:Datalog}) változóihoz hasonlíthatóak, így nem meglepő hogy beszélhetünk egy változó kvantifikáltságáról \cite{wiki:Quantification}.
+Ezek a változók leginkább az elsőrendű logika, illetve az ezen alapuló program- és lekérdezőnyelvek (pl. Prolog \cite{Colmerauer93thebirth}, Datalog \cite{Ceri:1989:YAW:627272.627357}) változóihoz hasonlíthatóak, így nem meglepő hogy beszélhetünk egy változó kvantifikáltságáról \cite{Huth:2004:LCS:975331}.
 Mind a szimbolikus, mind a lokális változók lehetnek -- elméletben -- egzisztenciálisan vagy univerzálisan kvantifikálva, ám nem minden kombináció használható minden helyzetben, és a két különböző szerepben lévő változókra valamelyest eltérő szabályok vonatkoznak.
 
-A szimbolikus változóknak mindenképpen egzisztenciálisan kvantifikáltnak ($\exists x$) kell lenniük. Univerzálisan kvantifikáltak ($\forall x$) nem lehetnek, hiszen akkor az összes elképzelhető modellentitásra kellene megvizsgálnunk a minták illeszkedését, ami pedig egy megoldhatatlan probléma. Ugyanezen logika mentén beláthatjuk, hogy a lokális változók sem lehetnek univerzálisan kvantifikálva, de a szimbolikus változókkal ellentétben itt megengedhetünk negatív -- más néven tagadó -- univerzális kvantifikációt ($\neg\forall x$), mivel az átalakítható (pozitív) egzisztenciális kvantifikációvá: 
-\begin{equation}
-\neg\forall x. P \equiv \exists x. \neg P \label{eq:negforalltoexists}
+A szimbolikus változóknak mindenképp felsorolható értékhalmazzal kell rendelkezniük, ezért szükségszerű egzisztenciálisan kvantifikáltnak ($\exists x$) lenniük.
+Univerzálisan kvantifikáltak ($\forall x$) nem lehetnek, hiszen akkor az összes elképzelhető modellentitásra kellene megvizsgálnunk a minták illeszkedését, ami pedig egy megoldhatatlan probléma, mivel ezek halmaza végtelen elemű.
+Ugyanez a logika igaz általánosságban a lokális változókra is, egy kivétellel: a lokális változó lehet univerzálisan kvantifikálva, ha pontosan egy, \emph{negatívan alkalmazott} kényszerben szerepel.
+A negatívan alkalmazott kényszerek negatív egzisztenciális kvantifikációt ($\neg\exists x$) jelentenek, ami az alábbi egyenlet alapján univerzális kvantifikációvá alakítható:
+\begin{equation} \label{eq:negexiststoforall}
+\neg\exists x\, P(x) \equiv \forall x\, \neg P(x)
 \end{equation}
-Ez az átalakítás szimbolikus változók esetén azonban nem alkalmazható, mert ...\todo{miért?}
+Ilyenkor a lokális változó ugyan univerzálisan van kvantifikálva, de az értékkészletét felsorolni sosem kell, hiszen egy negatív kényszerben szerepel, ami azt jelenti, hogy a kényszernek nem kell, sőt, nem is szabad teljesülnie. Ebben az esetben azonban érdemes \emph{helykitöltő változót} használni, ami expliciten jelezni a rendszer és a többi fejlesztő számára, hogy a változó értékére nem tartunk igényt.
 
-A fentebb leírtakból következik, hogy egy szimbolikus változóra a minta minden törzsében lennie kell legalább egy (pozitív) egzisztenciálisan kvantifikáló hivatkozásnak, egy lokális változóra pedig lennie kell a változóhoz tartozó törzsben vagy egy (pozitív) egzisztenciálisan kvantifikáló hivatkozásnak és legalább még egy másik hivatkozásnak, vagy kizárólag egyetlen egy negatív univerzálisan kvantifikáló hivatkozás lehet rá.
-Tehát a változó típusától és a rá történő hivatkozások minőségétől és mennyiségétől függ, hogy a felhasználó milyen figyelmeztetést vagy hibaüzenetet kap, melyet részletesen az ~\ref{tab:warningsErrors}. táblázat mutat.
+A fent leírtakból következik, hogy egy szimbolikus változóra a minta minden törzsében lennie kell legalább egy (pozitív) egzisztenciálisan kvantifikáló hivatkozásnak, egy lokális változóra pedig lennie kell a változóhoz tartozó törzsben vagy egy (pozitív) egzisztenciálisan kvantifikáló hivatkozásnak és legalább még egy másik hivatkozásnak, vagy kizárólag egyetlen egy negatív univerzálisan kvantifikáló hivatkozás lehet rá.
 
-\begin{table}[hbt]
-\centering
-%\begin{tabular}{|c|c|c|c|c|}
-\tabulinesep=3pt
-\begin{tabu} to\linewidth{|X[1.5,c,m]|X[1,c,m]|X[1,c,m]|X[1,c,m]|X[3,c,m]|}
+Létezik még az úgynevezett \emph{read-only} kategóriába sorolható hivatkozás, amely a nem bijektív kifejezésekben fordul elő, ahol a bijektív azt jelenti, hogy a kifejezés értéke alapján nem határozhatóak meg a kiértékelése során számba vett entitások.
+Emiatt az ilyen kifejezéseket is univerzálisan kvantifikálónak tekinthetjük, mivel egzisztenciálisan nem kvantifikálják paramétereiket.
+Ilyen kifejezések például az aggregátor kifejezések (pl. \mbox{\texttt{count find \ldots}}), melyek egy kényszer részeként jelennek meg (pl. \mbox{\texttt{n == count find \ldots}}).
+
+Tehát a változó típusától és a rá történő hivatkozások minőségétől és mennyiségétől függ, hogy a felhasználó milyen figyelmeztetést vagy hibaüzenetet kap, melyet részletesen az \ref{tab:warningsErrors}. táblázat mutat.
+%
+\tabulinesep=4pt
+\begin{longtabu} to \textwidth{|X[1.5,c,m]|X[1,c,m]|X[1,c,m]|X[1,c,m]|X[3,c,m]|}
+\caption{Figyelmeztetések és hibaüzenetek\label{tab:warningsErrors}} \\
 \hline
-& \multicolumn{3}{c|}{Változó hivatkozások a törzsben} & \\ \cline{2-4}
+& \multicolumn{3}{c|}{Változóhivatkozások a törzsben} & \\ \cline{2-4}
 Változó & Pozitív & Negatív & Read-only & Üzenet típusa \\
-\hline
-\hline
+\tabucline[1.5pt]{-}
+\endhead
+\multicolumn{5}{r}{\textit{a táblázat folytatódik a következő oldalon\ldots}} \\
+\endfoot
+\endlastfoot
 Szimbolikus & 0    & 0    & 0    & Hiba: nincs hivatkozás a változóra \\
 \hline
 Lokális     & 1    & 0    & 0    & Figyelmeztetés: egyszer használt változó \\
@@ -78,21 +85,7 @@ Lokális     & 0    & több & több & Hiba: univerzálisan kvantifikált lokáli
 \hline
 Szimbolikus & 0    & több & több & Hiba: univerzálisan kvantifikált szimbolikus változó \\
 \hline
-\end{tabu}
-%\end{tabular}
-\caption{Figyelmeztetések és hibaüzenetek}\label{tab:warningsErrors}
-\end{table}
-
-%----------------------------------------------------------------------------
-
-\section{Implementáció}
-
-A megtervezett ellenőrzés megvalósítását Java alapú Xtext validátor segítségével oldottam meg.\todo{mi az az Xtext?}\todo{mi az a validátor?}
-A validátor függvény egyetlen paramétere egy minta törzsét reprezentáló objektum, amelyen az ellenőrzést végezni fogja.
-Az Xtext keretrendszer ezt a függvényt a validációs folyamat részeként minden ellenőrzésre kerülő minta összes törzsére egyenként meghívja.
-A függvény egy mintatörzsben először megkeresi és minőségi csoportonként leszámlálja a törzsben és a törzshöz tartozó minta fejében található változóhivatkozásokat, majd az így felépített adatbázist bejárva megvizsgálja az egyes változókat a rájuk érvényes szabályok szerint, és ha szükséges, figyelmeztetést vagy hibaüzenetet emittál.
-
-A validátor működésének teszteléséhez JUnit teszteket is készítettem, illetve frissítettem a már meglévő unitteszteket. Ezek segítenek a nyelv jövőbeni változási, bővítése miatt szükséges módosítások során az esetleges hibák megtalálásában (regresszió tesztelés), illetve valamilyen szinten bemutatják, biztosítják az elkészült ellenőrzések hatásosságát is.
+\end{longtabu}
 
 %----------------------------------------------------------------------------
 
@@ -105,7 +98,7 @@ Most lássunk néhány gyakorlati példát az eddig leírtakra.
 Előfordulhat, hogy nincs egy szimbolikus változóra hivatkozás a minta egyik törzsében.
 
 \begin{lstlisting}
-package karate.query
+package karate.incquery
 
 import "http://karate/1.0"
 
@@ -122,7 +115,7 @@ Ez hiba, mivel a változó így univerzálisan kvantifikálódik (értsd: az ös
 Előfordulhat az is, hogy van ugyan hivatkozás a szimbolikus változóra, de azok egyike sem pozitív egzisztenciális kvantifikáció.
 
 \begin{lstlisting}
-package karate.query
+package karate.incquery
 
 import "http://karate/1.0"
 
@@ -136,7 +129,7 @@ pattern notDaniel(student) = e_{
 vagy
 %
 \begin{lstlisting}
-package karate.query
+package karate.incquery
 
 import "http://karate/1.0"
 import "http://www.eclipse.org/emf/2002/Ecore"
@@ -160,7 +153,7 @@ Pozitív egzisztenciális kvantifikáció híján szintén univerzálisan kvanti
 Ha egy lokális változó csak egyszer kerül megemlítésre a kódban, akkor változók közti kapcsolat leírására nem szolgálhat -- ugyanis ahhoz legalább kétszer kellene szerepelnie --, értékét nem tudjuk felhasználni. Az ilyen helyzet legtöbbször elírásra utal, ha azonban mégis jó okunk van ilyet használni -- mert nem érdekel minket például egy sok paraméteres minta néhány paramétere --, akkor használhatunk anonim változót (\texttt{\_}) vagy megjelölhetjük a változónkat egyszer használatosként (pl. \texttt{\_master}), hogy figyelmen kívül hagyjuk az ellenőrzést.
 
 \begin{lstlisting}
-package karate.query
+package karate.incquery
 
 import "http://karate/1.0"
 
@@ -176,7 +169,7 @@ pattern studentsWhoHaveMaster(student) = {
 , illetve
 %
 \begin{lstlisting}
-package karate.query
+package karate.incquery
 
 import "http://karate/1.0"
 
@@ -192,14 +185,14 @@ pattern numberOfStudents(n) = {
 %
 %\texttt{s} helykitöltő, futóváltozó; jelölni kell \texttt{\_}-al
 %
-A fenti két esetben nem mondhatjuk egyértelműen, hogy hibázott a felhasználó, de szeretnénk felhívni a figyelmét a hibalehetőségre, ezért itt figyelmeztetése (warning) használunk.
+A fenti két esetben nem mondhatjuk egyértelműen, hogy hibázott a felhasználó, de szeretnénk felhívni a figyelmét a hibalehetőségre, ezért itt figyelmeztetést (warning) használunk.
 
 \subsection{Pozitív hivatkozás nélküli lokális változó}
 
 A szimbolikus változókhoz hasonlóan, a lokális változóknak is szükséges, hogy szerepeljenek legalább egy pozitív egzisztenciális kvantifikáló kifejezésben, amellett hogy legalább két hivatkozással rendelkeznek a minta adott törzsében.
 %
 \begin{lstlisting}
-package karate.query
+package karate.incquery
 
 import "http://karate/1.0"
 
@@ -214,3 +207,22 @@ pattern exampleQuery() = e_{
 \end{lstlisting}
 %
 %\texttt{s} nincs pozitívan hivatkozva, ezért végtelen a doménje
+Pozitív egzisztenciális kvantifikáció híján univerzálisan kvantifikálódik a \texttt{student} változó, így értékhalmaza meghatározhatatlan, ezért a minta kiértékelhetetlen, tehát hibás.
+
+%----------------------------------------------------------------------------
+
+\section{Implementáció}
+
+A megtervezett ellenőrzés megvalósítását Java alapú Xtext validátor segítségével oldottam meg.
+A validátor függvény egyetlen paramétere egy minta törzsét reprezentáló objektum, amelyen az ellenőrzést végezni fogja.
+Az Xtext keretrendszer ezt a függvényt a validációs folyamat részeként minden ellenőrzésre kerülő minta összes törzsére egyenként meghívja.
+A függvény egy minta-törzsben először megkeresi és minőségi csoportonként leszámlálja a törzsben és a törzshöz tartozó minta fejében található változóhivatkozásokat, majd az így felépített adatbázist bejárva megvizsgálja az egyes változókat a rájuk érvényes szabályok szerint, és ha szükséges, figyelmeztetést vagy hibaüzenetet emittál.
+Az ellenőrzést működés közben a \ref{fig:unusedLive}. ábra mutatja.
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.90\textwidth]{figures/unused-variable-detection-warning.png}
+\caption{Az elkészült ellenőrzés futás közben}
+\label{fig:unusedLive}
+\end{figure}
+
+A validátor működésének teszteléséhez JUnit teszteket is készítettem, illetve frissítettem a már meglévő unitteszteket. Ezek segítenek a nyelv jövőbeni változási, bővítése miatt szükséges módosítások során az esetleges hibák megtalálásában (regresszió tesztelés), illetve valamilyen szinten bemutatják, biztosítják az elkészült ellenőrzések hatásosságát is.

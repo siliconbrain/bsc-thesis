@@ -3,8 +3,21 @@
 %----------------------------------------------------------------------------
 \chapter*{Kivonat}\addcontentsline{toc}{chapter}{Kivonat}
 
-A \emph{modell-vezérelt szoftverfejlesztés} egy manapság széles körben elterjedt technika, mely megkönnyíti mind a szoftverek előállítását, mind azok későbbi továbbfejlesztését, karbantartását.
-A technika alkalmazása során a fejlesztők az adott probléma doménjének egy olyan modelljét, modelljeit készítik el, mely(ek) a probléma megoldásának szempontjából fontos részeit, így segítve a megismerést, a megértést és a szimulációt.
+A dolgozat a modell-vezérelt szoftverfejlesztés során, modell-lekérdezések definiálásakor előforduló hibalehetőségek eseteit vizsgálja, konkrét környezetként az Eclipse Modeling Framework (EMF) platformjára épülő, a BME Méréstechnika és Információs Rendszerek Tanszékének Hibatűrő Rendszerek Kutatócsoportja által kidolgozott EMF-IncQuery lekérdező rendszer esetére.
+Ez a rendszer EMF modellek felett teszi lehetővé gráfminta alapú deklaratív lekérdezések elvégzését.
+
+A dolgozat lekérdezéseknek az EMF-IncQuery tárgynyelvén történő megfogalmazása során elkövethető emberi hibák elkerülése céljából a lekérdezőnyelv statikus analízisével foglalkozik.
+A statikus analízis segítségével, fejlesztési időben rendelkezésre álló adatok alapján elvégezhető vizsgálatokkal hívja fel a fejlesztők figyelmét a lekérdezésekben található hibákra, hibalehetőségekre.
+
+A dolgozat a tématerületet ismertető első fejezet után a második fejezetben beágyazza az EMF-IncQuery keretrendszert az EMF kontextusába, majd példákon keresztül ismerteti annak használatát és bemutatja lekérdezőnyelvét.
+
+A harmadik fejezet olyan ellenőrzések megtervezését és a kivitelező komponens elkészítését mutatja be, amelyek az EMF-IncQuery lekérdezőnyelvében található minták változóira történő hivatkozások minőségi és mennyiségi elemzése alapján tárják fel a fejlesztői hibalehetőségeket.
+
+A negyedik fejezet a lekérdezések és a kapcsolódó domén-modell közötti lehetséges ellentmondásokat a mintákban található változók között fennálló funkcionális függőségeken keresztül ellenőrző statikus vizsgálatokat mutatja be.
+Végül egy esettanulmányon keresztül szemlélteti a fejezetben ismertetett elemzések elvégzését segítő funkcionális függőség elemző kód felhasználását a lekérdezések végrehajtásának hatékonyabbá tételére.
+
+A dolgozatot az elkészült komponensek továbbfejlesztési lehetőségeinek áttekintése zárja.
+
 \vfill
 
 %----------------------------------------------------------------------------
@@ -12,6 +25,20 @@ A technika alkalmazása során a fejlesztők az adott probléma doménjének egy
 %----------------------------------------------------------------------------
 \chapter*{Abstract}\addcontentsline{toc}{chapter}{Abstract}
 
-This document is a \LaTeX-based skeleton for BSc/MSc~theses of students at the Electrical Engineering and Informatics Faculty, Budapest University of Technology and Economics. The usage of this skeleton is optional. It has been tested with the \emph{TeXLive} \TeX~implementation, and it requires the PDF-\LaTeX~compiler.
-\vfill
+The thesis analyzes the possible mistakes made in the definitions of model queries in context of model-driven software development.
+As a concrete environment the EMF-IncQuery system has been selected that was developed by the Fault Tolerant Systems Research Group of the Department of Measurement and Information Systems at Budapest University of Technology and Economics.
+This system enables the performance of graph pattern based queries on EMF models.
 
+The thesis deals with static analysis of the query language of EMF-IncQuery to avoid human mistakes that can be made while composing queries using the language.
+With the help of static analysis, it draws developers' attention to errors and possible mistakes occurring in queries with inspections based on data available at development time.
+
+The thesis, after introducing the topic in the first chapter, in the second chapter embeds the EMF-IncQuery framework into the context of EMF then demonstrates its usage through examples and presents its query language.
+
+The third chapter introduces the design and implementation of such an inspection component that reveals developers' mistakes based on the qualitative and quantitative analysis of references to patterns' variables.
+
+The fourth chapter introduces static analyses that check for possible inconsistencies between the query and the associated domain-model through the functional dependencies existing among the variables of the patterns.
+Finally demonstrates, through a case study, the use of the functional dependency checking code that supported the performance of analyses presented in the chapter for improving the efficiency of query execution. 
+
+The thesis closes with the review of possible further development of the realized components.
+
+\vfill
