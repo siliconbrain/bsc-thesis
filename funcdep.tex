@@ -39,7 +39,7 @@ Ha feltesszük, hogy nincs két ugyanolyan nevű mester és tudjuk, hogy egy mes
 Az ezt a jelenséget leíró matematikai konstrukciót nevezzük \emph{funkcionális függőségnek} (vagy függésnek)\cite{Gajdos06}.
 Esetünkben azt mondhatjuk, hogy a \textbf{Dódzsó} attribútum funkcionálisan függ a \textbf{Mester} attribútumtól, vagy más szóval, a \textbf{Dódzsó} attribútum értéke származtatható a \textbf{Mester} attribútum értékéből, annak függvénye -- innen jön az elnevezés is.
 Ahogyan a függvényeknek is lehet több bemeneti paramétere, úgy funkcionális függőségeknél is előfordul, hogy egy attribútumot több attribútum együttese határoz meg. (Gondoljunk csak arra, hogyan befolyásolja egy félév során történt számonkérések eredménye az év végi jegy alakulását egy tantárgyból.)
-A későbbiekben ,,$X$ attribútum meghatározza $Y$ attribútumot'' kifejezésére az elterjedt $X \rightarrow Y$ jelölést használjuk, ahol a nyíl bal oldalán több attribútum is állhat, ha azok együttesen határozzák meg $Y$-t ($VWX \rightarrow Y$). Továbbá rövidítésként használjuk még az $WX \rightarrow YZ$ jelölést (több attribútum a nyíl jobb oldalán), mely alatt azt értjük, hogy a jobb oldalon álló attribútumok mindegyikét külön-külön is meghatározzák a bal oldalon álló attribútumok: $WX \rightarrow YZ \equiv WX \rightarrow Y \wedge WX \rightarrow Z$
+A későbbiekben ,,$X$ attribútum meghatározza $Y$ attribútumot'' kifejezésére az elterjedt $X \rightarrow Y$ jelölést használjuk, ahol a nyíl bal oldalán több attribútum is állhat, ha azok együttesen határozzák meg $Y$-t ($VWX \rightarrow Y$). Továbbá rövidítésként használjuk még a $WX \rightarrow YZ$ jelölést (több attribútum a nyíl jobb oldalán), mely alatt azt értjük, hogy a jobb oldalon álló attribútumok mindegyikét külön-külön is meghatározzák a bal oldalon álló attribútumok: $WX \rightarrow YZ \equiv WX \rightarrow Y \wedge WX \rightarrow Z$
 
 Felmerül a kérdés, hogy ha rendelkezünk pár funkcionális függőséggel ($F$) egy reláció felett, akkor mi azoknak a függőségeknek a legbővebb halmaza, amely előállítható $F$ alapján.
 Válaszként Armstrong 1974-ben publikálta azt a három axiómát (pontosabban következtetési szabályt), melyek segítségével generálhatjuk az összes olyan funkcionális függőséget, melyet $F$ implikál.
@@ -70,7 +70,7 @@ A származtatott tulajdonságok használatához az alábbi dolgokra van szüksé
     \item az Ecore meta-modellen definiálni kell egy \texttt{EAttibute}-ot vagy \texttt{EReference}-t a kívánt névvel, típussal és multiplicitással, és beállítani a következő tulajdonságokat a létrejött \texttt{EStructuralFeature}-ön, hogy annak viselkedése megfelelő legyen: \textbf{derived} = \texttt{true}, \textbf{changeable} = \texttt{false}, \textbf{transient} = \texttt{true}, \textbf{volatile} = \texttt{true}
     \item definiálni kell a származtatás logikáját, és azt hozzárendelni a modellünkhöz
 \end{itemize}
-A tulajdonságok mögötti logikát az Genmodel meta-modellből generált Java forráskódhoz kell hozzáadnunk vagy kézzel, vagy valamilyen eszköz által generáltan.
+A tulajdonságok mögötti logikát a Genmodel meta-modellből generált Java forráskódhoz kell hozzáadnunk vagy kézzel, vagy valamilyen eszköz által generáltan.
 Az egyik ilyen eszköz maga az EMF-IncQuery, melynek lekérdező nyelvében definiálhatunk egy mintát, amelyet a \texttt{QueryBasedFeature} annotációval megjelölve, a rendszer automatikusan generálja a szükséges kódot a minta alapján a megfelelő helyre. 
 Ennek a technikának a részletes leírását a \cite{DerivedFeature} tartalmazza.
 Az alábbi kódrészlet a \ref{sect:IncQuery}. szekció Karate modelljéhez definiál egy lekérdezést, amelynek segítségével automatikusan tudjuk biztosítani, hogy egy tanítvány dódzsója megegyezzen a mesterének dódzsójával.
@@ -110,7 +110,7 @@ A legszerencsésebb esetben a modell többes jellegűként definiálja a tulajdo
 
 \section{Származtatott tulajdonságok jellegének ellenőrzése}
 
-Amint azt az előzőekben szemléltettem, hasznos információkhoz juthatunk az EMF modellek és az EMF-IncQuery minták elemzésével a bennük található funkcionális függőségek szempontjából.
+Amint azt az előzőekben szemléltettem, hasznos információkhoz juthatunk az \gls{EMF} modellek és az EMF-IncQuery minták elemzésével a bennük található funkcionális függőségek szempontjából.
 Az így kinyert információk segítségével figyelmeztethetjük a felhasználót ha ellentmondást találunk a modell és a logika között, illetve javaslatokat tehetünk a logika információtartalma alapján a modell javítására.
 Én, az előző példában is bemutatott, származtatott tulajdonságok jellegének fejlesztési idejű ellenőrzését valósítottam meg egyes és többes jelleg esetén.
 %\todo{mi a helyzet a többi jelleggel (counter, sum, iter)? -> főleg típus alapú ellenőrzések}
@@ -126,7 +126,7 @@ A leírtakat a \ref{tab:funcDepVsModelMulti}. táblázat szemlélteti.
 \begin{table}[hbt]
 \centering
 \renewcommand{\arraystretch}{1.5}
-\caption{Kapcsolat minta paraméterek közti funkcionális függőség és a modell-tulajdonság multiplicitása közt\label{tab:funcDepVsModelMulti}}
+\caption{Funkcionális függőség és tulajdonság multiplicitás közti kapcsolat\label{tab:funcDepVsModelMulti}}
 \begin{tabular}{|c|c|c|}
 \hline
 \diagbox{multiplicitás}{$E \rightarrow A$} & {\renewcommand{\arraystretch}{1}\begin{tabular}{c}nincs\\ (vagy nem\\ eldönthető)\end{tabular}} & van \\
@@ -164,7 +164,7 @@ Következő elemzett kényszertípusunk legyen az \emph{útvonal-kifejezés kén
 Ez a kényszer a meta-modell egy vagy több éle mentén állít fel kapcsolatot két paramétere közt.
 A kényszer által meghatározott funkcionális függőség az egyes élek által meghatározott függőségek kompozíciójaként számítható.
 Például \texttt{Student.master.dojo(E, A)} kényszer a \textbf{Student} és a \textbf{Master} típusú entitások között teremt kapcsolatot a \textbf{master} nevű élen, illetve a \textbf{Master} és a \textbf{Dojo} típusú entitások között a \textbf{dojo} nevű élen.
-Egy segédváltozó (\texttt{T}) bevezetésével akár szét is bontható két egyszerűbb kényszerre: \texttt{Studnet.master(E, T)} és \texttt{Master.dojo(T, A)}.
+Egy segédváltozó (\texttt{T}) bevezetésével akár szét is bontható két egyszerűbb kényszerre: \texttt{Student.master(E, T)} és \texttt{Master.dojo(T, A)}.
 Ez a lépés minden egynél több élet tartalmazó kényszer esetén megtehető.
 Egy él mentén két függés állhat fent: egy az eredeti és egy másik a fordított irányban.
 Az eredeti irányban akkor áll fenn funkcionális függés az entitás és a tulajdonság között, ha a tulajdonság multiplicitása egyes.
@@ -250,7 +250,7 @@ A heurisztika az előzőekben tárgyalt statikus, funkcionális függőség alap
 Az EMF-IncQuery keretrendszer bemutatásához és teljesítményének méréséhez egyik gyakran használt domén-modell a \emph{Network} modell (\ref{fig:EcoreMetaModelExample}. ábra).
 A modellhez három példánymodell készült: egy kicsi (1000 Person, 1000 Post és minden Person-höz 2 Circle), egy közepes (1000 Person, 1000 Post és minden Person-höz 10 Circle) és egy nagy (2000 Person, 2000 Post és minden Person-höz 20 Circle).
 
-Az modellhez írt lekérdezések egyike a \ref{lst:mutualFriendsPattern}. kódlistán látható.
+A modellhez írt lekérdezések egyike a \ref{lst:mutualFriendsPattern}. kódlistán látható.
 \begin{lstlisting}[float,floatplacement=htb,caption=MutualFriends minta,label=lst:mutualFriendsPattern]
 package network
 

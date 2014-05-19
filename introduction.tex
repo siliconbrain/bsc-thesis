@@ -35,7 +35,7 @@ A fennmaradó feladatokat pedig olyan eszközökkel próbálják támogatni, mel
 Ilyen komponenseket és eszközöket kínál például az Eclipse Foundation gondozásában álló Eclipse Modeling Project (\url{http://www.eclipse.org/modeling/}).
 A projekt egyik legfontosabb és alapvető része az Eclipse Modeling Framework (röviden \gls{EMF}), mely egy, az iparban széles körben elterjedt, modell alapú szoftverfejlesztést támogató keretrendszer.
 Az \gls{EMF} által nyújtott platformra épít az EMF-IncQuery keretrendszer, amely \gls{EMF} modellek felett teszi lehetővé gráfminta alapú lekérdezések deklaratív módon történő definiálását és hatékony végrehajtását.
-(Az EMF és EMF-IncQuery rendszereket a \ref{chap:techPrim}. fejezet részletesen ismerteti.)
+(Az \gls{EMF} és EMF-IncQuery rendszereket a \ref{chap:techPrim}. fejezet részletesen ismerteti.)
 
 Az EMF-IncQuery a lekérdezések specifikálására elsősorban egy szöveges leírónyelvet használ, melyre a későbbiekben legtöbbször \emph{lekérdező-} vagy \emph{tárgynyelvként} fogok hivatkozni az egyszerűség kedvéért.
 A lekérdezések tárgynyelven történő megfogalmazása nagyon hasonló más programozási és leírónyelvek használatához.
@@ -48,7 +48,7 @@ A \emph{statikus analízis} egy gyűjtőfogalom a fejlesztési időben rendelkez
 A spektrum egyik végén található szintaxis kiemelés, mely szinte minden magára valamit adó szövegszerkesztőben megtalálható, szigorúan véve statikus analízis ugyan, de közel sem nevezhető valódi vizsgálatnak.
 Egy fokkal kifinomultabb, már ténylegesen ellenőrzésnek nevezhető analízist végeznek az úgynevezett ``lint'' eszközök, melyek a kódban gyakran előforduló, de formálisan nem vagy csak nehezen bizonyítható hibákra, hibalehetőségekre hívják fel a fejlesztők figyelmét.
 A spektrum másik végén álló formális módszerekkel leggyakrabban valós idejű és biztonságkritikus rendszereknél (forgalom- és járműirányítás, nukleáris és orvosi rendszerek) találkozhatunk \cite{Storey:1996:SCC:524721}.
-Ezeknél a rendszereknél emberi életek múlhatnak a szoftver helyes működésén, ezért az ellenőrzésekhez olyan technikákat használnak mint a modell ellenőrzés\footnote{A modell ellenőrzésnek -- a neve ellenére -- viszonylag kevéssé kötődik a dolgozat témájához.}, az adatfolyam analízis, az absztrakt interpretáció, a szimbolikus végrehajtás vagy a Hoare logika.
+Ezeknél a rendszereknél emberi életek múlhatnak a szoftver helyes működésén, ezért az ellenőrzésekhez olyan technikákat használnak mint a modell ellenőrzés\footnote{A modell ellenőrzés -- a neve ellenére -- viszonylag kevéssé kötődik a dolgozat témájához.}, az adatfolyam analízis, az absztrakt interpretáció, a szimbolikus végrehajtás vagy a Hoare logika.
 
 % a statikus analízis előnyei
 A statikus analízis előnye, hogy relatíve hamar, még fejlesztési időben (pl. programírás közben, mentéskor vagy fordításkor) hívja fel a mérnökök figyelmét a problémákra, akik így időt takaríthatnak meg.
@@ -70,10 +70,10 @@ A statikus analízis azonban nem csak programokon értelmezhető fogalom, alkalm
 
 %A szakdolgozat során a feladatom tehát olyan fejlesztési idejű vizsgálatokat végző komponensek tervezése és elkészítése az EMF-IncQuery lekérdezőnyelvéhez, melyek fejlesztési vagy végrehajtási időben hasznosíthatóak.
 
-A \ref{chap:techPrim}. fejezetben először bővebben írok a modell-vezérelt szoftverfejlesztésről, és a hozzá szorosan kapcsolódó Eclipse Modeling Frameworkről.
-Ezután bemutatom az EMF-IncQuery-t és példákon keresztül részletesen ismertetem a tárgynyelvét.
+A \ref{chap:techPrim}. fejezetben először bővebben írok a modell-vezérelt szoftverfejlesztésről, és a hozzá szorosan kapcsolódó Eclipse Modeling Framework-ről.
+Ezután bemutatom az EMF-IncQuery-t és példákon keresztül ismertetem a használatát és a tárgynyelvét.
 
-A \ref{chap:varUsage}. fejezetben olyan ellenőrzéseket tervezek és készítek el, melyek az EMF-IncQuery lekérdezőnyelvében található minták változóira történő hivatkozások minőségéi és mennyiségi elemzése alapján hívják fel a fejlesztők figyelmét hibákra és hibalehetőségekre.
+A \ref{chap:varUsage}. fejezetben olyan ellenőrzéseket tervezek és készítek el, melyek az EMF-IncQuery lekérdezőnyelvében található minták változóira történő hivatkozások minőségi és mennyiségi elemzése alapján hívják fel a fejlesztők figyelmét hibákra és hibalehetőségekre.
 
 A \ref{chap:funcDep}. fejezetben a lekérdezőnyelvet a mintákban található változók között fennálló funkcionális függőségek szempontjából elemző ellenőrzéseket tervezek és készítek, melyek a kód és a kapcsolódó domén-modell között próbálnak ellentmondásokat felfedezni.
 Továbbá egy példán keresztül röviden bemutatom, hogyan használható fel az általam előzőekben tárgyalt funkcionális függőségek elemzéséhez készített kód bizonyos lekérdezések végrehajtásának hatékonyabbá tételére.

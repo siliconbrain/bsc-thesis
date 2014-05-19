@@ -58,7 +58,7 @@ Míg az \gls{MDA} nyújtja a platformfüggetlenséggel az általános modellezé
 Ennek a fordításnak az eredményeként a szoftvermodell valamilyen doménspecifikus környezeten áll elő, mely jelenthet pl. egy Java nyelvi környezetet is.
 
 A specializálódás előnyökkel és hátrányokkal is jár.
-Az előnyök között említhetjük a doménspecifikus szoftvertechnológia nagyobb hatékonyságát, adott területen akár félkész megoldást nyújtó jellegét, a modellezett feladat természetéhez való jobb illeszkedést, pl. a Prolog nyelv -- a futtatókörnyezetében -- beépítetten tartalmazz egy következtető automatát, ami szakértőrendszer alkalmazások írásakor már fél megoldást ad.
+Az előnyök között említhetjük a doménspecifikus szoftvertechnológia nagyobb hatékonyságát, adott területen akár félkész megoldást nyújtó jellegét, a modellezett feladat természetéhez való jobb illeszkedést, pl. a Prolog nyelv -- a futtatókörnyezetében -- beépítetten tartalmaz egy következtető automatát, ami szakértőrendszer alkalmazások írásakor már fél megoldást ad.
 Ugyanakkor a specializálódásból származnak hátrányok is: az átjárhatóság, magasabb szintű absztrakciók elvesztése, speciális programozási ismeretek iránti igény, a hordozhatóság csökkenése.
 Egy közbenső szintet jelent a doménspecifikus modellezés nyelveinek (\gls{DSML}, domain-specific modeling language) alkalmazása, melyek a \gls{DSM} szoftverfejlesztési metodológia eszközeként az \gls{MDA}-tól specifikusabb, de az általános célú programozási nyelvektől (pl. \CPP, Java, \CSharp) általánosabb reprezentációs szintet képviselnek \cite{Kelly2008}.
 Ezen a szinten, illetve \gls{DSML} nyelven leírva a programozási feladatot, már alkalmazhatunk automatikus kódgenerálást is, amely valamely általános programnyelvre fordítja a formális modellünket.
@@ -84,7 +84,7 @@ Az elsősorban Java nyelven íródott Eclipse integrált fejlesztő környezet (
 Ilyen nyelvek többek között az Ada, C/\CPP, Clojure, COBOL, Erlang, FORTRAN, Haskell, JavaScript, Perl, PHP, Python, R, Ruby, Scala, Scheme.
 Az Eclipse céljaiban hasonlít a Microsoft Visual Studio, vagy az Embarcadero Rapid Application Development (RAD) Studio integrált többnyelvű szoftverfejlesztő környezetére.
 Platformfüggetlenségét Linux, Mac OS X, Solaris és Windows operációs rendszereken való futtathatósága jelenti.
-A nyílt forráskódú környezet és hozzá kapcsolódó egyéb projektek rendszeres továbbfejlesztésről és új összetevők hozzáadásáról a lelkes és nyílt fejlesztői közösség  gondoskodik az Eclipse Foundation irányítása mellett.
+A nyílt forráskódú környezet és hozzá kapcsolódó egyéb projektek rendszeres továbbfejlesztéséről és új összetevők hozzáadásáról a lelkes és nyílt fejlesztői közösség  gondoskodik az Eclipse Foundation irányítása mellett.
 %A legutóbbi 4.3 verzió a Kepler nevet viseli és 2013. június 26-án jelent meg, de már folyik a legújabb, Luna projekt is \cite{wiki:EclipseIDE}. 
 
 Az integrált szoftverelemek felölelik a szoftverfejlesztés majd minden fázisát.
@@ -124,9 +124,9 @@ Az \gls{EMF} megkülönbözteti az adatmodell modelljét, azaz az adatmodell sze
 Az \gls{EMF} modellező széles elterjedtségét magyarázza a magas szintű modellezés kivitelezésének könnyű volta, az erős integráltsága az Eclipse alá, továbbá az automatikus kódgenerálás.
 Számtalan alkalmazása közül megemlítendő több Eclipse projektben való felhasználása.
 
-A továbbiakban mélyebben elemzem az EMF szerkezetét és lehetőségeit az \url{http://www.eclipse.org/modeling/emf/docs/} weboldalon található áttekintő cikkek \cite{Steinberg:2009:EEM:1197540,VogelEMF} feldolgozása révén.
+A továbbiakban mélyebben elemzem az \gls{EMF} szerkezetét és lehetőségeit az \url{http://www.eclipse.org/modeling/emf/docs/} weboldalon található áttekintő cikkek \cite{Steinberg:2009:EEM:1197540,VogelEMF} feldolgozása révén.
 
-Meta-modellből kettő található az EMF-ben:
+Meta-modellből kettő található az \gls{EMF}-ben:
 \begin{itemize}
 	\item Ecore meta-modell és 
 	\item Genmodel meta-modell.
@@ -165,8 +165,8 @@ A \ref{fig:DataModelWithXMI}. ábra mutat egy konkrét példát egy alkalmazás 
 \label{fig:DataModelWithXMI}
 \end{figure}
 %
-Az EMF modell lényegében az UML osztálydiagram nézetének egy részhalmaza \cite{EMFFundamentals}.
-Az EMF modellek az alábbi módokon is megadhatók:
+Az \gls{EMF} modell lényegében az UML osztálydiagram nézetének egy részhalmaza \cite{EMFFundamentals}.
+Az \gls{EMF} modellek az alábbi módokon is megadhatóak:
 \begin{enumerate}
 	\item Java Interfaces
 	\item UML Class Diagram
@@ -203,7 +203,7 @@ public class StudentImpl extends EObjectImpl
 \end{lstlisting}
 A programkód tartalmazza a getter/setter elérőfüggvényeket az attribútumokhoz és a referenciákhoz.
 
-Az EMF meta-modell létrehozását az \ref{fig:EcoreDiagramEditor}. ábra szerinti grafikus szerkesztő segíti.
+Az \gls{EMF} meta-modell létrehozását az \ref{fig:EcoreDiagramEditor}. ábra szerinti grafikus szerkesztő segíti.
 %
 \begin{figure}[htb]
 \centering
@@ -259,7 +259,7 @@ Az EMF-IncQuery felépítését a \ref{fig:EMFIncQueryStructure}. ábra mutatja 
 A megadott lekérdezésen (Query specification) alapulva mintaellenőrző pluginok generálódnak (Generated pattern matcher), melyek könnyen integrálhatók egy meglévő Eclipse-alapú alkalmazásba (Application, Application code).
 A lekérdezés megadását Xtext 2-alapú szerkesztő támogatja, amely fejlett szintaxis kiemeléssel, kódkiegészítéssel és formula ellenőrzéssel rendelkezik.
 Ezek a pluginok az EMF-IncQuery API-n keresztül elérik a rendszer belső funkcionalitását.
-Az API-ban a Validation Engine, validáló motor körbeveszi az EMF Validációs szolgáltatást  (Validation Service), hogy EMF-IncQuery-alapú online jól formáltság ellenőrzést végezve a validátorai révén szabványos Eclipse hiba markereket nyújtson.
+Az API-ban a Validation Engine, validáló motor körbeveszi az \gls{EMF} Validációs szolgáltatást  (Validation Service), hogy EMF-IncQuery-alapú online jól formáltság ellenőrzést végezve a validátorai révén szabványos Eclipse hiba markereket nyújtson.
 Másodsorban az interpretáló mintaellenőrző (Interpretative pattern matcher) a Java kódból származó közvetlen lekérdezések számára elérési pontot nyújt azok gyors végrehajtásához.
 Az API nyújtja továbbá a származtatott sajátosságok támogatását (Derived feature support).
 A keretrendszerben a Base komponens gyakran használt alacsony szintű inkrementális lekérdezéseket nyújt, mint pl. a már említett egyed felsorolások, és fordított irányú navigálás egyirányú hivatkozásokon.
@@ -282,7 +282,7 @@ Az eredményt Eclipse Application-ként futtatva, egy olyan Eclipse fejlesztői 
 
 Az így kapott környezetben kipróbálhatjuk az EMF-IncQuery-t: írhatunk lekérdezéseket a tárgynyelven, majd lefuttathatjuk őket példánymodelleken.
 Ehhez azonban szükségünk lesz egy modellre.
-Ha rendelkezünk már megfelelő EMF modellel, akkor használhatjuk azt, én azonban szeretném röviden bemutatni a modell elkészítésének menetét.
+Ha rendelkezünk már megfelelő \gls{EMF} modellel, akkor használhatjuk azt, én azonban szeretném röviden bemutatni a modell elkészítésének menetét.
 
 Mint modellezéskor mindig, most is egy domén specifikációjából fogunk kiindulni.
 Az általam modellezett domén a karate harcművészetet űzők egy egyszerűsített világa lesz.
@@ -293,7 +293,7 @@ A tanítványok egy és csak egy mester alatt tanulhatnak, azonban a mestereknek
 Minden mester a saját \emph{dódzsójában} (edzőterem, klub) oktatja tanítványait, melynek van neve.
 Az előző két mondat állításaiból következik, hogy egy tanítvány egyszerre pontosan egy dódzsóban tanulhat.
 
-Ezen leírás alapján elkészíthetjük a domén meta-modelljét az EMF Ecore diagram alapú modellezőjének segítségével.
+Ezen leírás alapján elkészíthetjük a domén meta-modelljét az \gls{EMF} Ecore diagram alapú modellezőjének segítségével.
 Ennek mikéntjéről bővebb leírást a \cite{VogelEMF} ad.
 Az általam elkészített meta-modellt a \ref{fig:karateMetaModel}. ábra mutatja.
 %
@@ -307,9 +307,9 @@ Az általam elkészített meta-modellt a \ref{fig:karateMetaModel}. ábra mutatj
 Az ábrán látható diagram az UML osztálydiagramok jelölésrendszerét használja.
 Jól láthatóak a kapcsolatok a modell főbb elemei közt: a Master és Student osztályok leszármazottjai az absztrakt Karateka osztálynak, megjelennek kétirányú kapcsolatok a Master, Student és Dojo osztályok között.
 A KarateStyle a lehetséges karate stílusok felsorolása.
-A modell gyökere a World osztály, ez tartalmazza a Karatekakat, akik közül a Master típusúak tartalmazzák a Dojokat.
+A modell gyökere a World osztály, ez tartalmazza a Karateka-kat, akik közül a Master típusúak tartalmazzák a Dojo-kat.
 
-Az Ecore meta-modell alapján elkészíthetjük a Genmodel meta-modellt, amelyből generálhatjuk modellünk egyedeinek létrehozásához és manipulálásához szükséges Java kódot és az Eclipse-be beépülő szerkesztő komponenseket, melyek segítenek a példánymodellek vizuális konstrukciójában.
+Az Ecore meta-modell alapján elkészíthetjük a Genmodel meta-modellt, amelyből generálhatjuk a modellünk egyedeinek létrehozásához és manipulálásához szükséges Java kódot és az Eclipse-be beépülő szerkesztő komponenseket, melyek segítenek a példánymodellek vizuális konstrukciójában.
 A következő lépésben az elkészült komponenseket -- az EMF-IncQuery komponenseivel együtt -- betöltjük az Eclipse környezet egy újabb példányába a már említett módon (futtatás Eclipse Application-ként).
 Itt varázsló segítségével létrehozhatjuk a modellünk egy új egyedét, melyet feltölthetünk a szükséges tartalommal.
 Én a példánymodellemet a \emph{The Karate Kid} (A karate kölyök) című 1984-es kultuszfilm alapján készítettem el, töltöttem fel adatokkal.
@@ -342,7 +342,7 @@ Ha a mintát beregisztráljuk az EMF-IncQuery \emph{Query Explorer} nézetébe �
 \begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{figures/karate-query-result.png}
-\caption{Keresés eredménye}
+\caption{A keresés eredménye}
 \label{fig:karateQueryResult}
 \end{figure}
 
@@ -356,16 +356,16 @@ Az Xtext biztosít olyan eszközöket is, mint a szintaxis kiemelés, a kontextu
 A nyelv a következő fontosabb elemekből épül fel \cite{EclipseOrgIncQueryLang}:
 \begin{description}
 \item[Csomag:] a \texttt{package} direktíva -- a Java-hoz hasonlóan -- jelzi, hogy melyik csomag tartalmazza a fájlban lévő mintákat
-\item[Importok:] \texttt{import} direktívákkal adhatjuk meg azokat az EMF csomagokat, melyeknek elemeire hivatkozni szeretnénk a lekérdezésekben
+\item[Importok:] \texttt{import} direktívákkal adhatjuk meg azokat az \gls{EMF} csomagokat, melyeknek elemeire hivatkozni szeretnénk a lekérdezésekben
 \item[Minta:] a \texttt{pattern} kulcsszóval bevezetett minták olyan \emph{predikátumok}, melyeknek lehetnek paramétereik -- melyeknek opcionálisan megadhatjuk a típusát is -- és legalább egy törzsük van; a minta törzsei diszjunktak, vagyis a törzsek logikai VAGY kapcsolatban állnak egymással
 \item[Minta-törzs:] a kapcsos zárójelek által határolt minta-törzs legalább egy kényszerből és valahány lokális változóból áll; a törzsben lévő kényszerek logikai ÉS kapcsolatban állnak egymással 
 \item[Kényszer:] kényszerek segítségével adhatóak meg a változók tulajdonságai és a közöttük lévő kapcsolatok; egy vagy több változóhivatkozás található bennük
 \item[Változó:] értéke megadható, vagy mintaillesztésnél helyettesítődik be; a minta paramétereit \emph{szimbolikus}, a törzsekben találhatóakat pedig \emph{lokális} változóknak nevezzük
 \end{description}
 
-A kényszereknek az alábbi fajtái léteznek a nyelvben:
-\begin{description}
-\item[Összehasonlítás kényszer (\texttt{CompareConstraint}):] ez a kényszer két kifejezés egyenlőségét vagy egyenlőtlenségét határozza meg
-\item[Típuskényszer (\texttt{EClassifierConstraint}):] ez a kényszer a paraméterének típusát határozza meg; példa: a \texttt{Student(student);} kifejezés a \texttt{student} változó típusát \textit{Student}-ként határozza meg
-\end{description}
-\todo{befejezni vagy törölni}
+%A kényszereknek az alábbi fajtái léteznek a nyelvben:
+%\begin{description}
+%\item[Összehasonlítás kényszer (\texttt{CompareConstraint}):] ez a kényszer két kifejezés egyenlőségét vagy egyenlőtlenségét határozza meg
+%\item[Típuskényszer (\texttt{EClassifierConstraint}):] ez a kényszer a paraméterének típusát határozza meg; példa: a \texttt{Student(student);} kifejezés a \texttt{student} változó típusát \textit{Student}-ként határozza meg
+%\end{description}
+%\todo{befejezni vagy törölni}

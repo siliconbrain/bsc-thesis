@@ -3,26 +3,36 @@
 \label{chap:summary}
 %----------------------------------------------------------------------------
 
-A modell-vezérelt szoftverfejlesztés egy olyan széles körben elterjedt technológia, mely elősegíti az összetett szoftverrendszerek tervezését, készítését, továbbfejlesztését és karbantartását.
-A technológia domének modellezésére és a modellek automatizált transzformációjára épít.
+A szakdolgozat elkészítése során megismerkedtem a modell-vezérelt szoftverfejlesztéssel, és az azt támogató Eclipse Modeling Framework-kel és Eclipse integrált fejlesztői környezettel.
+Megismertem továbbá az EMF-IncQuery, gráfminta alapú modell-lekérdezések definiálását és végrehajtását lehetővé tevő keretrendszerrel.
+Elemeztem az EMF-IncQuery lekérdezőnyelvében statikus analízis segítségével megoldható problémák témakörét, és kiválasztottam ezek közül kettőt: a változók használatával kapcsolatos problémákat (elgépelés, egyszeri hivatkozás, \ldots), illetve a származtatott tulajdonságok inkonzisztens jelleg-megadásának problémáját.
+A problémák okainak és körülményeinek mélyebb megismerése után megterveztem és megvalósítottam olyan statikus analízis alapú ellenőrzéseket, melyek fejlesztési időben hívják fel a fejlesztők figyelmét ezekre a problémákra.
+Végül az eredetileg az ellenőrzésekhez elkészített, funkcionális függőségeket elemző algoritmusokat felhasználtam a lekérdezések futási teljesítményének javításához.
 
-A szakdolgozat elkészítése során megismerkedtem a modellezés és modell-vezérelt szoftverfejlesztés technikáival, és az ezt támogató Eclipse integrált fejlesztői környezettel, és Eclipse Modeling Framework technológiával.
+A dolgozat elkészítése folyamán lehetőségem adódott hozzájárulni egy hivatalos, nyílt forrású Eclipse projekt -- az EMF-IncQuery -- fejlődéséhez.
+Az EMF-IncQuery fejlesztői és felhasználói végig érdeklődést mutattak a készülő ellenőrzések iránt, és használatba is vették azokat, mihelyst elkészültek.
 
-Megismertem a statikus analízis módszereit és lehetőségeit a szoftverfejlesztés hatékonyságának javítására.
-  lekérdezések szöveges leírására szolgáló nyelvével és annak használatával, és az Xtext validátorok írásával.
-Elemeztem a nyelvben statikus analízis segítségével megoldható problémák témakörét, és kiválasztottam ezek közül egy gyakran előforduló és kellemetlen következményekkel járó problémát, melynek kezelése mégis egyszerű, \sout{a féléves munka során megvalósítható}.
-A probléma okának és körülményeinek mélyebb megismerése után megterveztem és megvalósítottam a megoldáshoz szükséges ellenőrzést.
-Az elkészült alkotást működés közben a ~\ref{fig:unusedLive}. ábra mutatja.
-\sout{Ugyan éles bevetésére még nem került sor}, az EMF-IncQuery fejlesztői és felhasználói már most élénk érdeklődést mutatnak iránta.
+Röviden összefoglalva, az alábbi célokat értem el:
+\begin{itemize}
+    \item megismertem és a dolgozatban bemutattam modell-vezérelt szoftverfejlesztés és a modell-lekérdezések fogalmát az EMF-IncQuery keretrendszeren keresztül 
+    \item megterveztem és megvalósítottam kétféle, statikus analízisen alapuló ellenőrzést az EMF-IncQuery gráfminták leírására szolgáló nyelvéhez
+    \item az egyik ilyen ellenőrzéshez készült, funkcionális függőségek elemzését végző kódot felhasználtam a lekérdezések kiértékelési teljesítményének növeléséhez, melyet egy rövid esettanulmányon be is mutattam
+\end{itemize}
 
-Az alábbi célokat értem el: ...
-
-% * Eclipse contrib
-% * GitHub források
+Az általam készített ellenőrzések forrásai megtalálhatóak az alábbi online tárhelyeken:
+\begin{itemize}
+\item \textit{változók használatának vizsgálata:} \url{https://github.com/siliconbrain/EMF-IncQuery/tree/unused-variable-check}
+\item \textit{funkcionális függőség alapú vizsgálatok:} \url{https://github.com/siliconbrain/org.eclipse.incquery/tree/func-dep}
+\end{itemize}
 
 \section{Kitekintés}
 
-% * több törzs
-% * psystem
-% * többi jelleg (kind)
-% * sok egyéb statikus analízis
+Az elkészült ellenőrzések ugyan jelen állapotukban is sok segítséget nyújtanak, ám adódik még lehetőség további fejlesztésükre.
+
+A változók használatának vizsgálata nem tér ki a Java kódot tartalmazó kényszerekre, ám ez a hiányossága például egy önálló labormunka keretében pótolható.
+
+A funkcionális függőség alapú vizsgálatok több ponton is kiegészíthetőek.
+Az egyik ilyen lehetőség a függőségi kapcsolatok minőségének bevezetésével a sok törzsű minták esetének kezelése.
+Egy másik lehetőség a kényszerekből függőségeiket következtető funkcionalitás lecserélése az EMF-IncQuery PSystem-jében már meglévő algoritmusra, ezzel csökkentve a karbantartandó kód mennyiségét.
+
+Végül, az általam készítetteken kívül még rengeteg más statikus ellenőrzés is elképzelhető az EMF-IncQuery lekérdezőnyelvéhez, vagy akár a keretrendszer többi részéhez is, mind emberi mulasztásból fakadó hibák megelőzésére, mind a végrehajtási teljesítmény javítására. 

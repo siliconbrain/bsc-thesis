@@ -7,7 +7,7 @@
 %
 Az EMF-IncQuery lekérdezőnyelve -- más program- és leírónyelvekhez hasonlóan -- több olyan problémának is áldozatul esik, melyek statikus analízis segítségével hamar felismerhetőek, és a fejlesztők az analízis eredményét jó hatékonysággal használhatják fel az azonosított problémák orvoslására.
 Az egyik leggyakoribb ilyen kellemetlenség a változók nevének (azonosítójának) nem konzisztens használata -- magyarul elírása -- a kód különböző pontjain, mellyel szinte minden informatikus találkozott már valamilyen formában.
-Az lekérdezőnyelv sajátossága miatt -- miszerint a lokális változókat nem szükséges előre deklarálni, mivel ezt a környezet impliciten, azok első előfordulásakor megteszi a fejlesztő helyett -- a kódban található kifejezések ilyen gépelési hibák elfordulása mellett is mindig szintaktikailag helyesek maradnak.
+A lekérdezőnyelv sajátossága miatt -- miszerint a lokális változókat nem szükséges előre deklarálni, mivel ezt a környezet impliciten, azok első előfordulásakor megteszi a fejlesztő helyett -- a kódban található kifejezések ilyen gépelési hibák elfordulása mellett is mindig szintaktikailag helyesek maradnak.
 Így az ez által okozott hibák felderítéséhez a szemantikának, a kód jelentésének vizsgálatára van szükség, különben a hibára csak a lekérdezések futtatása után derülhet fény, melyre a rossz találati eredmények utalnak, és a hiba valódi oka még ekkor sem mindig egyértelmű.
 
 %----------------------------------------------------------------------------
@@ -30,7 +30,7 @@ A negatívan alkalmazott kényszerek negatív egzisztenciális kvantifikációt 
 \begin{equation} \label{eq:negexiststoforall}
 \neg\exists x\, P(x) \equiv \forall x\, \neg P(x)
 \end{equation}
-Ilyenkor a lokális változó ugyan univerzálisan van kvantifikálva, de az értékkészletét felsorolni sosem kell, hiszen egy negatív kényszerben szerepel, ami azt jelenti, hogy a kényszernek nem kell, sőt, nem is szabad teljesülnie. Ebben az esetben azonban érdemes \emph{helykitöltő változót} használni, ami expliciten jelezni a rendszer és a többi fejlesztő számára, hogy a változó értékére nem tartunk igényt.
+Ilyenkor a lokális változó ugyan univerzálisan van kvantifikálva, de az értékkészletét felsorolni sosem kell, hiszen egy negatív kényszerben szerepel, ami azt jelenti, hogy a kényszernek nem kell, sőt, nem is szabad teljesülnie. Ebben az esetben azonban érdemes \emph{helykitöltő változót} használni, ami expliciten jelzi a rendszer és a többi fejlesztő számára, hogy a változó értékére nem tartunk igényt.
 
 A fent leírtakból következik, hogy egy szimbolikus változóra a minta minden törzsében lennie kell legalább egy (pozitív) egzisztenciálisan kvantifikáló hivatkozásnak, egy lokális változóra pedig lennie kell a változóhoz tartozó törzsben vagy egy (pozitív) egzisztenciálisan kvantifikáló hivatkozásnak és legalább még egy másik hivatkozásnak, vagy kizárólag egyetlen egy negatív univerzálisan kvantifikáló hivatkozás lehet rá.
 
@@ -43,6 +43,12 @@ Tehát a változó típusától és a rá történő hivatkozások minőségét�
 \tabulinesep=4pt
 \begin{longtabu} to \textwidth{|X[1.5,c,m]|X[1,c,m]|X[1,c,m]|X[1,c,m]|X[3,c,m]|}
 \caption{Figyelmeztetések és hibaüzenetek\label{tab:warningsErrors}} \\
+\hline
+& \multicolumn{3}{c|}{Változóhivatkozások a törzsben} & \\ \cline{2-4}
+Változó & Pozitív & Negatív & Read-only & Üzenet típusa \\
+\tabucline[1.5pt]{-}
+\endfirsthead
+\caption{Figyelmeztetések és hibaüzenetek (folyt.)} \\
 \hline
 & \multicolumn{3}{c|}{Változóhivatkozások a törzsben} & \\ \cline{2-4}
 Változó & Pozitív & Negatív & Read-only & Üzenet típusa \\
@@ -217,6 +223,8 @@ A megtervezett ellenőrzés megvalósítását Java alapú Xtext validátor seg�
 A validátor függvény egyetlen paramétere egy minta törzsét reprezentáló objektum, amelyen az ellenőrzést végezni fogja.
 Az Xtext keretrendszer ezt a függvényt a validációs folyamat részeként minden ellenőrzésre kerülő minta összes törzsére egyenként meghívja.
 A függvény egy minta-törzsben először megkeresi és minőségi csoportonként leszámlálja a törzsben és a törzshöz tartozó minta fejében található változóhivatkozásokat, majd az így felépített adatbázist bejárva megvizsgálja az egyes változókat a rájuk érvényes szabályok szerint, és ha szükséges, figyelmeztetést vagy hibaüzenetet emittál.
+Az implementáció nem tér ki a tetszőleges Java kódot tartalmazó kényszerek vizsgálatára, mivel az túlmutat a dolgozat keretein.
+
 Az ellenőrzést működés közben a \ref{fig:unusedLive}. ábra mutatja.
 \begin{figure}[htb]
 \centering
@@ -225,4 +233,4 @@ Az ellenőrzést működés közben a \ref{fig:unusedLive}. ábra mutatja.
 \label{fig:unusedLive}
 \end{figure}
 
-A validátor működésének teszteléséhez JUnit teszteket is készítettem, illetve frissítettem a már meglévő unitteszteket. Ezek segítenek a nyelv jövőbeni változási, bővítése miatt szükséges módosítások során az esetleges hibák megtalálásában (regresszió tesztelés), illetve valamilyen szinten bemutatják, biztosítják az elkészült ellenőrzések hatásosságát is.
+A validátor működésének teszteléséhez JUnit teszteket is készítettem, illetve frissítettem a már meglévő unitteszteket. Ezek segítenek a nyelv jövőbeni változása, bővítése miatt szükséges módosítások során az esetleges hibák megtalálásában (regresszió tesztelés), illetve valamilyen szinten bemutatják, biztosítják az elkészült ellenőrzések hatásosságát is.
