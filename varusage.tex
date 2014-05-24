@@ -15,28 +15,40 @@ A lekérdezőnyelv sajátossága miatt -- miszerint a lokális változókat nem 
 
 Az ilyen típusú ellenőrzés messze nem példa nélküli, más programozási nyelveknél és fejlesztőkörnyezeteknél gyakran találkozhatunk vele \emph{``nem használt változó detektálás''} néven.
 Ám mivel az EMF-IncQuery lekérdezőnyelvében a változó fogalma kissé eltér a legtöbb nyelvben megszokottól, más környezetek megoldásai nem alkalmazhatóak egy az egyben.
-A lekérdezőnyelv mintái esetében kétféle változóról beszélhetünk:
+Mint azt a \ref{chap:techPrim}. fejezetben már leírtam, a lekérdezőnyelv mintái esetében kétféle változóról beszélhetünk:
 \begin{itemize}
-    \item a \emph{szimbolikus változók}, melyek egy minta paraméterei, illetve
+    \item a \emph{paraméterváltozók}, melyek egy minta paraméterei, illetve
     \item a \emph{lokális változók}, amelyek egy mintának egy bizonyos törzsén belül fordulnak csak elő.
 \end{itemize}
 Ezek a változók leginkább az elsőrendű logika, illetve az ezen alapuló program- és lekérdezőnyelvek (pl. Prolog \cite{Colmerauer93thebirth}, Datalog \cite{Ceri:1989:YAW:627272.627357}) változóihoz hasonlíthatóak, így nem meglepő hogy beszélhetünk egy változó kvantifikáltságáról \cite{Huth:2004:LCS:975331}.
-Mind a szimbolikus, mind a lokális változók lehetnek -- elméletben -- egzisztenciálisan vagy univerzálisan kvantifikálva, ám nem minden kombináció használható minden helyzetben, és a két különböző szerepben lévő változókra valamelyest eltérő szabályok vonatkoznak.
 
-A szimbolikus változóknak mindenképp felsorolható értékhalmazzal kell rendelkezniük, ezért szükségszerű egzisztenciálisan kvantifikáltnak ($\exists x$) lenniük.
-Univerzálisan kvantifikáltak ($\forall x$) nem lehetnek, hiszen akkor az összes elképzelhető modellentitásra kellene megvizsgálnunk a minták illeszkedését, ami pedig egy megoldhatatlan probléma, mivel ezek halmaza végtelen elemű.
+Mind a paraméterváltozók, mind a lokális változók lehetnek -- elméletben -- egzisztenciálisan vagy univerzálisan kvantifikálva, ám nem minden kombináció használható minden helyzetben, és a kétféle változókra valamelyest eltérő szabályok vonatkoznak.
+A paraméterváltozóknak mindenképp felsorolható értékhalmazzal kell rendelkezniük, hiszen a mintaillesztőnek végső soron elő kell állítania az illeszkedések halmazát, ezen változókhoz is értéket rendelve.
+Emiatt ezeknek a változóknak szükségszerűen egzisztenciálisan kvantifikáltaknak ($\exists x$) kell lenniük.
+Univerzálisan kvantifikáltak ($\forall x$) nem lehetnek, hiszen akkor az összes elképzelhető modellentitásra kellene megvizsgálnunk a minta illeszkedését, ami pedig egy megoldhatatlan probléma, mivel ezek halmaza végtelen elemű, ugyanis az EMF-IncQuery szemantikája szerint az attribútumértékek is megköthetőek változóba.
 Ugyanez a logika igaz általánosságban a lokális változókra is, egy kivétellel: a lokális változó lehet univerzálisan kvantifikálva, ha pontosan egy, \emph{negatívan alkalmazott} kényszerben szerepel.
 A negatívan alkalmazott kényszerek negatív egzisztenciális kvantifikációt ($\neg\exists x$) jelentenek, ami az alábbi egyenlet alapján univerzális kvantifikációvá alakítható:
 \begin{equation} \label{eq:negexiststoforall}
 \neg\exists x\, P(x) \equiv \forall x\, \neg P(x)
 \end{equation}
-Ilyenkor a lokális változó ugyan univerzálisan van kvantifikálva, de az értékkészletét felsorolni sosem kell, hiszen egy negatív kényszerben szerepel, ami azt jelenti, hogy a kényszernek nem kell, sőt, nem is szabad teljesülnie. Ebben az esetben azonban érdemes \emph{helykitöltő változót} használni, ami expliciten jelzi a rendszer és a többi fejlesztő számára, hogy a változó értékére nem tartunk igényt.
+Ilyenkor a lokális változó ugyan univerzálisan van kvantifikálva, de az értékkészletét felsorolni sosem kell, hiszen egy negatív kényszerben szerepel, ami azt jelenti, hogy a kényszernek nem kell, sőt, nem is szabad teljesülnie.
 
-A fent leírtakból következik, hogy egy szimbolikus változóra a minta minden törzsében lennie kell legalább egy (pozitív) egzisztenciálisan kvantifikáló hivatkozásnak, egy lokális változóra pedig lennie kell a változóhoz tartozó törzsben vagy egy (pozitív) egzisztenciálisan kvantifikáló hivatkozásnak és legalább még egy másik hivatkozásnak, vagy kizárólag egyetlen egy negatív univerzálisan kvantifikáló hivatkozás lehet rá.
-
-Létezik még az úgynevezett \emph{read-only} kategóriába sorolható hivatkozás, amely a nem bijektív kifejezésekben fordul elő, ahol a bijektív azt jelenti, hogy a kifejezés értéke alapján nem határozhatóak meg a kiértékelése során számba vett entitások.
+Létezik még az úgynevezett \emph{read-only} kategóriába sorolható hivatkozás.
+Ez olyan kifejezésekben fordul elő, ahol a kifejezés értéke alapján nem határozhatóak meg a kiértékelése során számba vett entitások.
 Emiatt az ilyen kifejezéseket is univerzálisan kvantifikálónak tekinthetjük, mivel egzisztenciálisan nem kvantifikálják paramétereiket.
-Ilyen kifejezések például az aggregátor kifejezések (pl. \mbox{\texttt{count find \ldots}}), melyek egy kényszer részeként jelennek meg (pl. \mbox{\texttt{n == count find \ldots}}).
+Ilyen kifejezések az ellenőrzés kényszerben lévő Java kifejezés és az aggregátor kifejezések.
+%\todo{Az attribútumvizsgálat, pl. check (A<B) szerintem tök szemléletes további példa lenne itt, és jól elmagyarázható, hogy miért read only ez a változóhivatkozás}
+
+A fent leírtakból következik, hogy \emph{egy paraméterváltozóra a minta minden törzsében lennie kell legalább egy egzisztenciálisan kvantifikáló hivatkozásnak}.
+Egy lokális változó hivatkozásai két konstellációban fordulhatnak elő:
+\begin{itemize}
+    \item vagy egyetlen egy hivatkozás egy univerzálisan kvantifikáló, de negatívan alkalmazott kényszerben,
+    \item vagy egy egzisztenciálisan kvantifikáló hivatkozás, illetve ezen kívül akárhány más hivatkozás
+\end{itemize}
+Az első esetben érdemes egyszer használatos változót alkalmaznunk, ami jelzi, hogy a változót máshol már nem szabad hivatkozni.
+A második esetben szintén ajánlott egyszer használatos változót használnunk, \emph{ha} csak pontosan egy, egzisztenciálisan kvantifikáló hivatkozásunk van a változóra.
+Ezzel jelezhetjük, hogy a változóra szándékosan nem hivatkozunk máshol.
+Ellenkező esetben felmerülhet a kérdés, hogy a hivatkozás tényleg egy olyan új változót vezet be\footnote{Emlékeztető: a lokális változók első hivatkozásuknál impliciten deklarálódnak}, amelyre csak egyszer szerettünk volna hivatkozni, vagy a hivatkozás egy másik változóra irányult volna, de a változó nevét elgépeltük.
 
 Tehát a változó típusától és a rá történő hivatkozások minőségétől és mennyiségétől függ, hogy a felhasználó milyen figyelmeztetést vagy hibaüzenetet kap, melyet részletesen az \ref{tab:warningsErrors}. táblázat mutat.
 %
@@ -57,39 +69,39 @@ Változó & Pozitív & Negatív & Read-only & Üzenet típusa \\
 \multicolumn{5}{r}{\textit{a táblázat folytatódik a következő oldalon\ldots}} \\
 \endfoot
 \endlastfoot
-Szimbolikus & 0    & 0    & 0    & Hiba: nincs hivatkozás a változóra \\
+Paraméter & 0    & 0    & 0    & Hiba: nincs hivatkozás a változóra \\
 \hline
-Lokális     & 1    & 0    & 0    & Figyelmeztetés: egyszer használt változó \\
+Lokális   & 1    & 0    & 0    & Figyelmeztetés: egyszer használt változó \\
 \hline
-Szimbolikus & 0    & 1    & 0    & Hiba: univerzálisan kvantifikált szimbolikus változó \\
+Paraméter & 0    & 1    & 0    & Hiba: univerzálisan kvantifikált paraméterváltozó \\
 \hline
-Lokális     & 0    & 0    & 1    & Hiba: univerzálisan kvantifikált lokális változó \\
+Lokális   & 0    & 0    & 1    & Hiba: univerzálisan kvantifikált lokális változó \\
 \hline
-Szimbolikus & 0    & 0    & 1    & Hiba: univerzálisan kvantifikált szimbolikus változó \\
+Paraméter & 0    & 0    & 1    & Hiba: univerzálisan kvantifikált paraméterváltozó \\
 \hline
-Lokális     & 0    & 0    & több & Hiba: univerzálisan kvantifikált lokális változó \\
+Lokális   & 0    & 0    & több & Hiba: univerzálisan kvantifikált lokális változó \\
 \hline
-Szimbolikus & 0    & 0    & több & Hiba: univerzálisan kvantifikált szimbolikus változó \\
+Paraméter & 0    & 0    & több & Hiba: univerzálisan kvantifikált paraméterváltozó \\
 \hline
-Lokális     & 0    & 1    & 1    & Hiba: univerzálisan kvantifikált lokális változó \\
+Lokális   & 0    & 1    & 1    & Hiba: univerzálisan kvantifikált lokális változó \\
 \hline
-Szimbolikus & 0    & 1    & 1    & Hiba: univerzálisan kvantifikált szimbolikus változó \\
+Paraméter & 0    & 1    & 1    & Hiba: univerzálisan kvantifikált paraméterváltozó \\
 \hline
-Lokális     & 0    & 1    & több & Hiba: univerzálisan kvantifikált lokális változó \\
+Lokális   & 0    & 1    & több & Hiba: univerzálisan kvantifikált lokális változó \\
 \hline
-Szimbolikus & 0    & 1    & több & Hiba: univerzálisan kvantifikált szimbolikus változó \\
+Paraméter & 0    & 1    & több & Hiba: univerzálisan kvantifikált paraméterváltozó \\
 \hline
-Lokális     & 0    & több & 0    & Hiba: univerzálisan kvantifikált lokális változó \\
+Lokális   & 0    & több & 0    & Hiba: univerzálisan kvantifikált lokális változó \\
 \hline
-Szimbolikus & 0    & több & 0    & Hiba: univerzálisan kvantifikált szimbolikus változó \\
+Paraméter & 0    & több & 0    & Hiba: univerzálisan kvantifikált paraméterváltozó \\
 \hline
-Lokális     & 0    & több & 1    & Hiba: univerzálisan kvantifikált lokális változó \\
+Lokális   & 0    & több & 1    & Hiba: univerzálisan kvantifikált lokális változó \\
 \hline
-Szimbolikus & 0    & több & 1    & Hiba: univerzálisan kvantifikált szimbolikus változó \\
+Paraméter & 0    & több & 1    & Hiba: univerzálisan kvantifikált paraméterváltozó \\
 \hline
-Lokális     & 0    & több & több & Hiba: univerzálisan kvantifikált lokális változó \\
+Lokális   & 0    & több & több & Hiba: univerzálisan kvantifikált lokális változó \\
 \hline
-Szimbolikus & 0    & több & több & Hiba: univerzálisan kvantifikált szimbolikus változó \\
+Paraméter & 0    & több & több & Hiba: univerzálisan kvantifikált paraméterváltozó \\
 \hline
 \end{longtabu}
 
@@ -99,9 +111,9 @@ Szimbolikus & 0    & több & több & Hiba: univerzálisan kvantifikált szimboli
 
 Most lássunk néhány gyakorlati példát az eddig leírtakra.
 
-\subsection{Hivatkozás nélküli szimbolikus változó}
+\subsection{Hivatkozás nélküli paraméterváltozó}
 
-Előfordulhat, hogy nincs egy szimbolikus változóra hivatkozás a minta egyik törzsében.
+Előfordulhat, hogy egy paraméterváltozóra nincs hivatkozás a minta egyik törzsében.
 
 \begin{lstlisting}
 package karate.incquery
@@ -114,11 +126,11 @@ pattern exampleQuery(student) = e_{
 }_
 \end{lstlisting}
 %
-Ez hiba, mivel a változó így univerzálisan kvantifikálódik (értsd: az összes lehetséges egyedre illik a kifejezés), amit nem praktikus kiértékelni.
+Ez hiba, mivel a változó így univerzálisan kvantifikálódik, ezért a mintaillesztő az adott törzs kiértékelésekor nem tud értéket rendelni a paraméterhez.
 
-\subsection{Pozitív hivatkozás nélküli szimbolikus változó}
+\subsection{Pozitív hivatkozás nélküli paraméterváltozó}
 
-Előfordulhat az is, hogy van ugyan hivatkozás a szimbolikus változóra, de azok egyike sem pozitív egzisztenciális kvantifikáció.
+Előfordulhat az is, hogy van ugyan hivatkozás a paraméterváltozóra, de azok egyike sem (pozitív) egzisztenciális kvantifikáció.
 
 \begin{lstlisting}
 package karate.incquery
@@ -152,12 +164,24 @@ pattern exampleQuery(student) = e_{
 %
 % Itt \texttt{s} csak bemeneti irányú (read-only) változó.
 %
-Pozitív egzisztenciális kvantifikáció híján szintén univerzálisan kvantifikálódik a változó, ahogyan az előbbi esetben.
+A probléma megegyezik az előző ellenőrzésnél látottal: a változó univerzálisan kvantifikált, a mintaillesztő nem tudja a változó értékhalmazát meghatározni.
 
 \subsection{Lokális változó egyszeri hivatkozással}
 
-Ha egy lokális változó csak egyszer kerül megemlítésre a kódban, akkor változók közti kapcsolat leírására nem szolgálhat -- ugyanis ahhoz legalább kétszer kellene szerepelnie --, értékét nem tudjuk felhasználni. Az ilyen helyzet legtöbbször elírásra utal, ha azonban mégis jó okunk van ilyet használni -- mert nem érdekel minket például egy sok paraméteres minta néhány paramétere --, akkor használhatunk anonim változót (\texttt{\_}) vagy megjelölhetjük a változónkat egyszer használatosként (pl. \texttt{\_master}), hogy figyelmen kívül hagyjuk az ellenőrzést.
+Ha egy lokális -- de nem egyszer használatos -- változó csak egyszer kerül megemlítésre a kódban, akkor változók közti kapcsolat leírására nem szolgálhat -- ugyanis ahhoz legalább kétszer kellene szerepelnie.
+Az ilyen helyzet elgépelésre vagy más hiányosságra utal.
 
+\begin{lstlisting}
+package karate.incquery
+
+import "http://karate/1.0"
+
+pattern isStudentOfMiyagi(student) = {
+    Student(student);
+    Student.master.name(w_studnet_, "Kesuke Miyagi");
+}
+\end{lstlisting}
+,
 \begin{lstlisting}
 package karate.incquery
 
@@ -166,12 +190,9 @@ import "http://karate/1.0"
 pattern studentsWhoHaveMaster(student) = {
     Student(student);
     Master(w_master_);
-    // ez a sor lemaradt: Student.master(student, master);
+    // ez a sor maradhatott le: Student.master(student, master);
 }
 \end{lstlisting}
-%
-%\texttt{t}-re csak egy hivatkozás van.
-%
 , illetve
 %
 \begin{lstlisting}
@@ -188,32 +209,31 @@ pattern numberOfStudents(n) = {
     n == count find allStudents(w_student_);
 }
 \end{lstlisting}
-%
-%\texttt{s} helykitöltő, futóváltozó; jelölni kell \texttt{\_}-al
-%
-A fenti két esetben nem mondhatjuk egyértelműen, hogy hibázott a felhasználó, de szeretnénk felhívni a figyelmét a hibalehetőségre, ezért itt figyelmeztetést (warning) használunk.
+
+A fenti három esetben nem mondhatjuk egyértelműen, hogy hibázott a felhasználó, de szeretnénk felhívni a figyelmét a hibalehetőségre, ezért itt figyelmeztetést (warning) használunk.
+Ha valóban csak helykitöltésre használjuk a változót -- mert nem érdekel minket például egy sok paraméteres minta néhány paramétere --, akkor használjunk anonim vagy egyszer használatos változót, hogy jelezzük szándékunkat és figyelmen kívül hagyjuk az ellenőrzést.
 
 \subsection{Pozitív hivatkozás nélküli lokális változó}
 
-A szimbolikus változókhoz hasonlóan, a lokális változóknak is szükséges, hogy szerepeljenek legalább egy pozitív egzisztenciális kvantifikáló kifejezésben, amellett hogy legalább két hivatkozással rendelkeznek a minta adott törzsében.
+Az egynél többször hivatkozott lokális változóknak, a paraméterváltozókhoz hasonlóan, szintén szükséges, hogy szerepeljenek legalább egy pozitív egzisztenciálisan kvantifikáló kifejezésben.
 %
 \begin{lstlisting}
 package karate.incquery
 
 import "http://karate/1.0"
 
-pattern allStudents(student) = {
-    Student(student);
+pattern isShortName(name) = {
+    Karateka.name(_, name);
+    check(name.length < 10);
 }
 
-pattern exampleQuery() = e_{
-    neg Student.name(student, "Daniel LaRusso");
-    neg find allStudents(student);
-}_
+pattern longNamesExistThatAreNotMiyagi() = {
+    neg find isShortName(e_name_);
+    name != "Kesuke Miyagi";
+}
 \end{lstlisting}
 %
-%\texttt{s} nincs pozitívan hivatkozva, ezért végtelen a doménje
-Pozitív egzisztenciális kvantifikáció híján univerzálisan kvantifikálódik a \texttt{student} változó, így értékhalmaza meghatározhatatlan, ezért a minta kiértékelhetetlen, tehát hibás.
+Pozitív egzisztenciális kvantifikáció híján univerzálisan kvantifikálódik a \texttt{student} változó, így a mintaillesztő nem képes meghatározni értékhalmazát.
 
 %----------------------------------------------------------------------------
 
@@ -222,11 +242,11 @@ Pozitív egzisztenciális kvantifikáció híján univerzálisan kvantifikálód
 A megtervezett ellenőrzés megvalósítását Java alapú Xtext validátor segítségével oldottam meg.
 A validátor függvény egyetlen paramétere egy minta törzsét reprezentáló objektum, amelyen az ellenőrzést végezni fogja.
 Az Xtext keretrendszer ezt a függvényt a validációs folyamat részeként minden ellenőrzésre kerülő minta összes törzsére egyenként meghívja.
-A függvény egy minta-törzsben először megkeresi és minőségi csoportonként leszámlálja a törzsben és a törzshöz tartozó minta fejében található változóhivatkozásokat, majd az így felépített adatbázist bejárva megvizsgálja az egyes változókat a rájuk érvényes szabályok szerint, és ha szükséges, figyelmeztetést vagy hibaüzenetet emittál.
-Az implementáció nem tér ki a tetszőleges Java kódot tartalmazó kényszerek vizsgálatára, mivel az túlmutat a dolgozat keretein.
+A függvény egy mintatörzsben először megkeresi és minőségi csoportonként leszámlálja a törzsben és a törzshöz tartozó minta fejében található változóhivatkozásokat, majd az így felépített adatbázist bejárva megvizsgálja az egyes változókat a rájuk érvényes szabályok szerint, és ha szükséges, figyelmeztetést vagy hibaüzenetet emittál.
+Az implementáció nem tér ki a tetszőleges Java kódot tartalmazó ellenőrzés kényszer és \texttt{eval} aggregátor kifejezés vizsgálatára, mivel az túlmutat a dolgozat keretein.
 
 Az ellenőrzést működés közben a \ref{fig:unusedLive}. ábra mutatja.
-\begin{figure}[htb]
+\begin{figure}[!t]
 \centering
 \includegraphics[width=0.90\textwidth]{figures/unused-variable-detection-warning.png}
 \caption{Az elkészült ellenőrzés futás közben}

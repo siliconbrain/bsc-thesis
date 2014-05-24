@@ -29,6 +29,7 @@
 \usepackage{tabu}
 \usepackage{titlesec}
 \usepackage{pbox}
+\usepackage{pdfpages}
 
 %--------------------------------------------------------------------------------------
 % Main variables
@@ -84,7 +85,7 @@
     linkcolor=black,               % color of internal links
     citecolor=black,               % color of links to bibliography
     filecolor=black,               % color of file links
-    urlcolor=black                  % color of external links
+    urlcolor=black                 % color of external links
 }
 
 %--------------------------------------------------------------------------------------
@@ -183,6 +184,7 @@ aboveskip=10pt}
 \include{acknowledgement}
 \tableofcontents\vfill
 \include{declaration}
+\includepdf[pages={1}]{assignment_hun.pdf}
 \include{abstract}
 \include{introduction}
 \include{techprim}

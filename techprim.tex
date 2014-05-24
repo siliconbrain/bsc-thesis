@@ -3,73 +3,6 @@
 \label{chap:techPrim}
 %----------------------------------------------------------------------------
 
-\section{Programozási paradigmák fejlődése}
-
-Napjaink nagyméretű, sokszor többmilliónyi kódsorból álló szoftverrendszereinek kifejlesztése elképzelhetetlen lenne előzetes rendszertervezés nélkül.
-A különféle tervezésmódszertanok nyomot hagytak a szoftverek tervezési módszerein is.
-Egyik híres módszertan a Barry Boehm által 1986-ban publikált Spirál modell \cite{Boehm:1986:SMS:12944.12948}, melyben a fejlesztés szokásos fázisai -- követelmény specifikáció, feladatelemzés, architekturális tervezés, algoritmikus tervezés, implementálás, tesztelés -- mellett megjelenik az élet folytonosságát kifejező, magasabb szinten való ismétlődése a fejlesztési lépéseknek.
-A különböző szoftverfejlesztési paradigmák -- moduláris, strukturális, objektum orientált, komponens alapú, aspektus orientált, generikus (template alapú), evolúciós, intencionális, multiparadigmás -- nélkül a nagyméretű, korszerű programrendszerek előállítása lehetetlen volna.
-A modern szoftverfejlesztést támogató -- \gls{CASE}, computer-aided software engineering -- eszközök egyik ismert tagja az említett tervezési folyamat első lépéseit támogató Unified Modeling Language (\gls{UML}).
-A fejlett szoftverparadigmák mindegyike kiemelten kezeli a modellezés különböző szintjeinek gépi támogatását.
-Ismert tény, hogy az adott programnyelven történő implementálás időigényének nagyságrendjébe esik a tesztelés és az előzetes rendszertervezés időigénye is, így ezek automatizálásának szándéka érthető.
-
-%----------------------------------------------------------------------------
-
-\section{A modellezés előnyei}
-
-A \emph{modell} definíciója szerint egy rendszer, elmélet, vagy jelenség leírása, mely rendelkezik annak ismert, vagy kikövetkeztetett tulajdonságaival és a jellemzői további vizsgálatára használható \cite{dict:Model}. 
-A szoftverrendszerek tervezésénél többféle modellt alkalmaznak:
-\begin{itemize}
-	\item adatszerkezeti modell (objektummodell, osztályhierarchia, öröklődés, stb.)
-	\item funkcionális modell (adatforrások, -tárolók, -nyelők, -folyamok)
-	\item dinamikus modell (állapotok, események, kommunikáció) \cite{Kondorosi07}.
-\end{itemize}
-Az ezen modelleken alapuló nézetek és diagramok -- osztályhierarchia, külső felhasználók, objektumok együttműködése, tevékenységek, események időbelisége, objektumok állapota, rendelkezésre álló szoftver- és hardver erőforrások -- nélkül a tervezés nagy rendszerek esetében áttekinthetetlen, a rendszer implementálás előtti tesztelése, viselkedésének elemzése, idő- és költségbecslések elvégzése kivitelezhetetlen.
-A modellezés fejlődése a szoftverfejlesztésben a 2000-es évekre elvezetett a \emph{modell-vezérelt paradigmák} -- model-driven software development (\gls{MDSD}), model-driven engineering (\gls{MDE}), model-driven architecture (\gls{MDA}) -- és eszközrendszerek kifejlődéséhez \cite{OMG:MDA:FAQ,Schmidt:MDE:10.1109/MC.2006.58,MDSD:TEM06}.
-
-%----------------------------------------------------------------------------
-
-\section{Platformfüggetlen szoftvermodellezés}
-
-Az \gls{OMG} által fejlesztett \gls{MDA} metodológia a szoftverrendszer funkcionalitását platformfüggetlen modell (\gls{PIM}, platform-independent model) alkalmazásával, megfelelő doménspecifikus leírónyelv (\gls{DSL}, domain-specific language) segítségével definiálja.
-A modell-vezérelt architektúrához (\gls{MDA}) kapcsolódik többek között a jól ismert \gls{UML} rendszermodellező nyelv és az \gls{XMI} (XML Metadata Interchange) metaadatok XML-alapú cseréjét biztosító szabvány is \cite{OMG:MDA:Spec}. 
-Az \gls{MDA} által felhasznált eszközök az alábbi kategóriákba sorolhatóak:
-\begin{itemize}
-	\item \emph{szerkesztő eszközök} (creation tools) modellek létrehozására, szerkesztésére
-	\item \emph{elemző eszközök} (analysis tools) a modellek teljességének, konzisztens szerkezetének, hibamentességének ellenőrzésére, szoftvermetrikák számítására
-	\item \emph{transzformációs eszközök} (transformation tools) meglévő modellek más modellekbe alakításhoz, vagy programnyelvekre fordításhoz, dokumentáláshoz
-	\item \emph{kompozíciós eszközök} (composition tools) több forrásmodell egy modellé egyesítéséhez
-	\item \emph{tesztelő eszközök} (test tools) a modellek teszteléséhez
-	\item \emph{szimulációs eszközök} (simulation tools) a modell által leírt rendszer működésének szimulálásához
-	\item \emph{metaadat menedzselő eszközök} (metadata management tools) különböző modellek közti általános kapcsolatok és metaadatok -- pl. létrehozó, létrehozási idő, stb. -- kezelésére
-	\item \emph{visszafejtő eszközök} (reverse engineering tools) idejétmúlt modellek vagy más információhordozók teljes értékű modellekké alakítására.
-\end{itemize}
-
-A szakdolgozatom keretében kifejlesztendő komponensek modell-lekérdezések -- melyekre szintén tekinthetünk modellként -- analízisére lesznek alkalmasak, emiatt az elemző eszközök közé tartoznak.
-
-Egy konkrét szoftverfejlesztési platform megadása után megtörténik a platformfüggetlen modell transzformációja az adott, konkrét platformon működő modellre (\gls{PSM}, platform-specific model).
-Ezt a transzformációt leírhatjuk többek közt egy modelltranszformációs nyelv (\gls{MTL}) segítségével, amilyen pl. a VIATRA2 Textual Command Language \cite{Balogh:2006:AMT:1141277.1141575}.
-
-%----------------------------------------------------------------------------
-
-\section{Platform-specifikus szoftvermodellezés}
-
-Míg az \gls{MDA} nyújtja a platformfüggetlenséggel az általános modellezés magas szintjét és az ebből eredő átjárhatóságot a platformok között, addig a konkrét alkalmazások létrehozásához az \gls{MDA}-ban készült platformfüggetlen modellt (\gls{PIM}) le kell fordítani egy adott szoftverplatformra.
-Ennek a fordításnak az eredményeként a szoftvermodell valamilyen doménspecifikus környezeten áll elő, mely jelenthet pl. egy Java nyelvi környezetet is.
-
-A specializálódás előnyökkel és hátrányokkal is jár.
-Az előnyök között említhetjük a doménspecifikus szoftvertechnológia nagyobb hatékonyságát, adott területen akár félkész megoldást nyújtó jellegét, a modellezett feladat természetéhez való jobb illeszkedést, pl. a Prolog nyelv -- a futtatókörnyezetében -- beépítetten tartalmaz egy következtető automatát, ami szakértőrendszer alkalmazások írásakor már fél megoldást ad.
-Ugyanakkor a specializálódásból származnak hátrányok is: az átjárhatóság, magasabb szintű absztrakciók elvesztése, speciális programozási ismeretek iránti igény, a hordozhatóság csökkenése.
-Egy közbenső szintet jelent a doménspecifikus modellezés nyelveinek (\gls{DSML}, domain-specific modeling language) alkalmazása, melyek a \gls{DSM} szoftverfejlesztési metodológia eszközeként az \gls{MDA}-tól specifikusabb, de az általános célú programozási nyelvektől (pl. \CPP, Java, \CSharp) általánosabb reprezentációs szintet képviselnek \cite{Kelly2008}.
-Ezen a szinten, illetve \gls{DSML} nyelven leírva a programozási feladatot, már alkalmazhatunk automatikus kódgenerálást is, amely valamely általános programnyelvre fordítja a formális modellünket.
-A \gls{DSML} nyelven való feladatleírás könnyebbsége és kisebb részletesség iránti igénye az ily módon végzett szoftverfejlesztés hatékonyságában is megmutatkozik, mely összemérhető a \gls{CASE} eszközök, illetve az \gls{UML} hatékonyságával és absztrakciós szintjével, de azoktól korszerűbb, és azoktól szélesebb körben használható.
-
-A \gls{DSM} környezetek a magas szintű leírónyelven és az abból általános programnyelvű kódot generáló fordítón kívül általában további általánosan használt alapszolgáltatásokat is nyújtanak.
-A következőkben egy ilyen környezetet, az Eclipse Modeling Framework-öt (\gls{EMF}) mutatom be, mivel az EMF-IncQuery keretrendszer és ezáltal a feladatom jelentős része is erre épül.
-Az \gls{EMF} az Eclipse nyílt forráskódú, platformfüggetlen magas szintű szoftverfejlesztési környezet általános modellező keretrendszere.
-
-%----------------------------------------------------------------------------
-
 \section{Az Eclipse integrált szoftverfejlesztő keretrendszer}
 
 Az elsősorban Java nyelven íródott Eclipse integrált fejlesztő környezet (Integrated Development Environment, IDE) egy elsődlegesen Java szoftverek fejlesztésére alkalmas eszköz (lásd \ref{fig:EclipseIDE}. ábrán), ám az alap munkakörnyezeten kívül -- a meglehetősen gazdag beépülő-modul készletének köszönhetően -- számtalan további programnyelven teszi lehetővé a fejlesztést.
@@ -117,93 +50,44 @@ Az EMF-IncQuery keretrendszernek részei olyan komponensek, melyek a PDE-et felh
 
 Az Eclipse Modeling Framework (\gls{EMF}) adatszerkezetek, domének modellezésére szolgáló keretrendszer, mely modell-vezérelt szoftverfejlesztést tesz lehetővé, vagyis képes a modellezett adatszerkezetek Java kódjának generálására is \cite{VogelEMF}.
 Ily módon könnyen áttekinthető vizuális támogatással és grafikus szerkesztővel hozhatunk létre robusztus, nagyméretű adatrendszer modelleket, melyekből a közvetlen kódgenerálás is megoldott.
+Az \gls{EMF} modellező széles elterjedtségét magyarázza a magas szintű modellezés kivitelezésének könnyű volta, az erős integráltsága az Eclipse alá, továbbá az automatikus kódgenerálás.
+Számtalan alkalmazása közül megemlítendő több Eclipse projektben való felhasználása.
 Az \gls{EMF} előnyei között említendő a csoportmunka támogatása is.
 Az adatszerkezetek modellezésére vonatkozó ajánlás azok elkülönítése a programkódtól, ily módon csak adattagokat tartalmazó osztályok definiálása.
 
-Az \gls{EMF} megkülönbözteti az adatmodell modelljét, azaz az adatmodell szerkezetét leíró meta-modellt az aktuális modelltől, mely a meta-modell egy példányaként fogható fel. 
-Az \gls{EMF} modellező széles elterjedtségét magyarázza a magas szintű modellezés kivitelezésének könnyű volta, az erős integráltsága az Eclipse alá, továbbá az automatikus kódgenerálás.
-Számtalan alkalmazása közül megemlítendő több Eclipse projektben való felhasználása.
-
 A továbbiakban mélyebben elemzem az \gls{EMF} szerkezetét és lehetőségeit az \url{http://www.eclipse.org/modeling/emf/docs/} weboldalon található áttekintő cikkek \cite{Steinberg:2009:EEM:1197540,VogelEMF} feldolgozása révén.
 
-Meta-modellből kettő található az \gls{EMF}-ben:
+Az \gls{EMF}-nek része kétféle metamodell:
 \begin{itemize}
-	\item Ecore meta-modell és 
-	\item Genmodel meta-modell.
+	\item az Ecore metamodell és 
+	\item a Genmodel metamodell.
 \end{itemize}
-Az Ecore meta-modell a definiált osztályokról tartalmaz információt, míg a Genmodel a Java kód generálásához tartalmaz járulékos adatokat, mint pl. fájlnevet és elérési utat, valamint a kódgenerálást vezérlő paramétert.
-Az Ecore meta-modell különféle elemek definiálását teszi lehetővé:
+Az Ecore metamodellek a definiált osztályokról tartalmaznak információt, míg a Genmodel metamodellek a Java kód generálásához tartalmaznak járulékos adatokat, mint pl. fájlnevet és elérési utat, valamint a kódgenerálást vezérlő paramétert.
+Az Ecore metamodell az alábbi főbb komponensek definiálását teszi lehetővé:
 \begin{itemize}
-	\item \texttt{EClass}: attribútumokat és/vagy hivatkozásokat tartalmazó osztály
+	\item \texttt{EClass}: ezek a komponensek reprezentálják a modellezett osztályokat, melyek a nevükből, és opcionális \texttt{EAttribute} és \texttt{EReference} elemekből állnak
+	\item \texttt{EDataType}: egyszerűbb adattípus, pl. \texttt{int}, \texttt{float}, \texttt{java.util.Date}
 	\item \texttt{EAttribute}: névvel és típussal rendelkező attribútum
-	\item \texttt{EReference}: két osztály közötti kapcsolat egyik végét reprezentálja; egy flag-gel jelzi, ha tartalmazást reprezentál
-	\item \texttt{EDataType}: adattípus, pl. \texttt{int}, \texttt{float}, \texttt{java.util.Date}.
+	\item \texttt{EReference}: két osztály közötti kapcsolat egyik irányát szimbolizálja; egy flag-gel jelzi, ha tartalmazást reprezentál
 \end{itemize}
-%
-Az Ecore meta-modell felépítését a \ref{fig:EcoreStruct}. ábra mutatja.
-%
+Az Ecore metamodell komponenseinek hierarchiája a \ref{fig:EcoreStruct}. ábrán látható \cite{EclipseOrgEcoreDoc}.
+A \ref{fig:DataModelWithXMI}. ábra egy konkrét példát mutat Ecore metamodellre, és mellette \gls{XMI} formátumú specifikációjának egy részletét.
 \begin{figure}[htb]
 \centering
-\includegraphics[width=0.8\textwidth]{figures/ecore-metamodel-struct.png}
-\caption{Ecore meta-modell szerkezete}
+\includegraphics[width=\textwidth]{figures/ecore-hierarchy.png}
+\caption{Ecore metamodell komponensei}
 \label{fig:EcoreStruct}
 \end{figure}
 %
-Az Ecore meta-modell fő elemei a \ref{fig:EcoreStruct}. ábra kontextusába helyezve a következők \cite{EMFFundamentals}: 
-A gyökér objektum egy EObject elem, ebbe tartoznak az EPackage csomagok, melyek egyszerre kezelendő osztályokból (EClass és EDataType) épülnek fel.
-A class szinten EClass elemek reprezentálják a modellezett osztályokat, melyek a nevükből és EAttribute és/vagy EReference elemekből állnak.
-Az attribútumoknak neve és típusa is van, míg a referenciák egy bináris kapcsolat egyik irányát modellezik, van nevük és megadják a hivatkozott osztály típusát és a tartalmazásjelző flag-et.
-Az adattípust az EDataType elem adhatja meg.  
-
-Az alkalmazások konkrét adatmodelljei az Ecore meta-modell egyedei.
-A \ref{fig:DataModelWithXMI}. ábra mutat egy konkrét példát egy alkalmazás adatmodelljére.
-%
-\begin{figure}[htb]
-\centering
-\includegraphics[width=\textwidth]{figures/datamodel-example-with-xmi-desc.png}
-\caption{Alkalmazás adatmodell példa, XMI formátumú megadással}
-\label{fig:DataModelWithXMI}
-\end{figure}
-%
-Az \gls{EMF} modell lényegében az UML osztálydiagram nézetének egy részhalmaza \cite{EMFFundamentals}.
-Az \gls{EMF} modellek az alábbi módokon is megadhatóak:
-\begin{enumerate}
-	\item Java Interfaces
-	\item UML Class Diagram
-	\item XML Schema
-\end{enumerate}
-A modellimport és a kódgenerálás lehetőségeit a \ref{fig:ModelImportAndCodegen}. ábrán láthatjuk \cite{EMFFundamentals}.
-%
 \begin{figure}[!b]
 \centering
-\includegraphics[width=\textwidth]{figures/model-import-and-codegen.png}
-\caption{Modell import és kódgenerálás}
-\label{fig:ModelImportAndCodegen}
+\includegraphics[width=\textwidth]{figures/datamodel-example-with-xmi-desc.pdf}
+\caption{Ecore metamodell példa és XMI formátumú megadása}
+\label{fig:DataModelWithXMI}
 \end{figure}
-%
-A kódgenerálás oda-vissza működik, Ecore modell generálható annotált Java interfészekből \cite{MasteringEMF}.
-A generált kód tartalmazza az interfészt és az osztály implementációt, pl. a \ref{fig:DataModelWithXMI}. ábra szerinti modell esetén a következő formában:
-%
-\begin{lstlisting}
-public interface Student extends EObject
-{
-    String getStudentName();
-    void setStudentName(String value);
-    String getNeptunCode();
-    void setNeptunCode(String value);
-    EList<Subject> getSubjects();
-}
-\end{lstlisting}
-\begin{lstlisting}
-public class StudentImpl extends EObjectImpl
-    implements Student
-{
-    ...
-}
-\end{lstlisting}
-A programkód tartalmazza a getter/setter elérőfüggvényeket az attribútumokhoz és a referenciákhoz.
+%Az \gls{EMF} modell lényegében az UML osztálydiagram nézetének egy részhalmaza \cite{EMFFundamentals}.
 
-Az \gls{EMF} meta-modell létrehozását az \ref{fig:EcoreDiagramEditor}. ábra szerinti grafikus szerkesztő segíti.
+Az Ecore metamodellek létrehozását az \ref{fig:EcoreDiagramEditor}. ábra szerinti grafikus szerkesztő segíti.
 %
 \begin{figure}[htb]
 \centering
@@ -212,18 +96,27 @@ Az \gls{EMF} meta-modell létrehozását az \ref{fig:EcoreDiagramEditor}. ábra 
 \label{fig:EcoreDiagramEditor}
 \end{figure}
 %
-Egy példát egy adatszerkezetre \cite{VogelEMF} alapján a \ref{fig:EcoreMetaModelExample}. ábra mutat.
+A \ref{fig:EcoreMetaModelExample}. ábra a szerkesztővel készíthető metamodellre mutat egy példát\footnote{Network modell. Forrás: \url{https://github.com/ujhelyiz/EMF-IncQuery-Examples/tree/master/network} (2014.05.21.)}.
 %
 \begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{figures/ecore-network-metamodel-diag.pdf}
-\caption{Példa Ecore meta-modellre (Network modell)}
+\caption{Példa grafikus szerkesztővel megadott Ecore metamodellre (Network modell)}
 \label{fig:EcoreMetaModelExample}
 \end{figure}
+A \ref{fig:EcoreMetaModelExample}. ábrán látható diagram az \gls{UML} osztálydiagramjának nyelvezetét követi.
+Megjelennek rajta az osztályokat szimbolizáló dobozok, azokban az osztály neve, illetve attribútumai névvel és típussal.
+A dobozokat névvel és multiplicitással rendelkező élek kötik össze, melyek az osztályok közötti referenciákat jelzik.
+A tartalmazást szimbolizáló éleken megjelenik az UML-ből ismert teli rombusz is.
+Az \gls{EMF} modellek a grafikus szerkesztőn kívül az alábbi módokon is megadhatóak:
+\begin{enumerate}
+	\item Java Interfaces
+	\item UML Class Diagram
+	\item XML Schema
+\end{enumerate}
 
 A dolgozatban kulcsszerepet játszó Eclipse Modeling Framework (\gls{EMF}) bemutatásának összefoglalásaként a következőket emelhetjük ki \cite{EMFFundamentals}:
-Az \gls{EMF} a legkézenfekvőbb modellező eszköz a Java környezet számára.
-Az alkalmazás belső modelljére épít, nem szükséges más magas szintű modellező eszköz.
+Az \gls{EMF} a legkézenfekvőbb modellező eszköz az Eclipse számára, mivel nagyszerűen beépül és együttműködik a környezettel és az azt körülvevő szoftver-ökoszisztémával.
 A modellezést és a programozást keverten is képes kezelni növelve ezáltal mindkettő hatásfokát.
 A szoftverfejlesztés termelékenységét növeli és megkönnyíti az integrációt.
 Mindezek alapján az Eclipse modell alapú fejlesztésének és adatintegrációjának az alapja. 
@@ -239,9 +132,9 @@ A szekció célja bemutatni az EMF-IncQuery és a lekérdezőnyelv felépítés�
 A keretrendszer főbb tulajdonságait röviden a \cite{EMFIncQuery} foglalja össze:
 Az EMF-IncQuery \gls{EMF} modelleken végzendő deklaratív lekérdezések definiálására és végrehajtására alkalmas keretrendszer.
 Fontos jellemzője, hogy a definiált lekérdezéseket kézi programírás nélkül, hatékonyan hajthatjuk végre.
-A lekérdezőnyelv a gráfmintázatok módszerét alkalmazza, amely tömör és egyszerű eljárás komplex szerkezetű modell-lekérdezések megadására.
+A lekérdezőnyelv a gráfminták matematikai formalizmusán alapul, amely tömör és egyszerű eljárás komplex szerkezetű modell-lekérdezések megadására.
 A kiemelkedő futási teljesítményt azáltal nyújtja, hogy inkrementális gráfminta illesztési technikákat alkalmaz.
-Ennek köszönhetően a keresés még milliós nagyságrendű elemszám mellett is gyors.
+Ennek köszönhetően a keresést elég egyszer elvégezni, a továbbiakban a lekérdezés kiértékelése még milliós nagyságrendű elemszám mellett is gyors.
 Emellett az \gls{EMF} pár hiányosságát is orvosolja, mint például az osztályok egyedinek gyors és hatékony felsorolása helyre való tekintet nélkül, egyszerű fordított navigáció bármilyen referencia mentén, és objektumok megkeresése attribútum érték alapján.
 Az újabb verzió képes származtatott tulajdonságok -- virtuális attribútumok és referenciák -- kiértékelésére is.
 
@@ -259,8 +152,8 @@ Az EMF-IncQuery felépítését a \ref{fig:EMFIncQueryStructure}. ábra mutatja 
 A megadott lekérdezésen (Query specification) alapulva mintaellenőrző pluginok generálódnak (Generated pattern matcher), melyek könnyen integrálhatók egy meglévő Eclipse-alapú alkalmazásba (Application, Application code).
 A lekérdezés megadását Xtext 2-alapú szerkesztő támogatja, amely fejlett szintaxis kiemeléssel, kódkiegészítéssel és formula ellenőrzéssel rendelkezik.
 Ezek a pluginok az EMF-IncQuery API-n keresztül elérik a rendszer belső funkcionalitását.
-Az API-ban a Validation Engine, validáló motor körbeveszi az \gls{EMF} Validációs szolgáltatást  (Validation Service), hogy EMF-IncQuery-alapú online jól formáltság ellenőrzést végezve a validátorai révén szabványos Eclipse hiba markereket nyújtson.
-Másodsorban az interpretáló mintaellenőrző (Interpretative pattern matcher) a Java kódból származó közvetlen lekérdezések számára elérési pontot nyújt azok gyors végrehajtásához.
+Az API-ban a Validation Engine, modell-helyesség ellenőrző motor körbeveszi az \gls{EMF} Validációs szolgáltatást (Validation Service), hogy EMF-IncQuery-alapú online jól formáltság ellenőrzőket nyújtson a szabványos Eclipse hiba-markerek révén.
+Az interpretáló mintaillesztő (Interpretative pattern matcher) közvetlenül Java kódból indított ad-hoc lekérdezések gyors végrehajtásához nyújt elérési pontot.
 Az API nyújtja továbbá a származtatott sajátosságok támogatását (Derived feature support).
 A keretrendszerben a Base komponens gyakran használt alacsony szintű inkrementális lekérdezéseket nyújt, mint pl. a már említett egyed felsorolások, és fordított irányú navigálás egyirányú hivatkozásokon.
 A lekérdezések inkrementális kiértékelését és életciklus kezelését a RETE motor szolgáltatja (RETE Core).
@@ -274,7 +167,7 @@ A gráfminta keresés ilyen módon nagyon finoman paraméterezett keresések kiv
 
 \subsection{Használat}
 
-Ha egyszerűen csak használni szeretnénk az EMF-IncQuery által nyújtott szolgáltatásokat, akkor nem kell mást tennünk, mint telepíteni az \emph{EMF-IncQuery SDK}-t, illetve a hiányzó függőségeket a már meglévő Eclipse környezetünkbe \cite{EclipseOrgIncQueryInstall}.
+Ha egyszerűen csak használni szeretnénk az EMF-IncQuery által nyújtott szolgáltatásokat, akkor nem kell mást tennünk, mint telepíteni az EMF-IncQuery SDK-t, illetve a hiányzó függőségeket a már meglévő Eclipse környezetünkbe \cite{EclipseOrgIncQueryInstall}.
 Ha azonban újabb komponenseket szeretnénk a keretrendszerhez fejleszteni, akkor a \cite{EclipseOrgIncQueryDevEnv} forrás lesz a segítségünkre.
 A fejlesztés megkezdéséhez először le kell tölteni a keretrendszer forráskódját, majd importálni a projekteket a fejlesztői környezetünkbe.
 Ezután, az Xtext kódgeneráló munkafolyamatainak (MWE2 szkriptek) végrehajtásával előbb legeneráljuk a lekérdezőnyelv feldolgozásához szükséges kódot, majd javasolt a projekt tisztítása és teljes újrafordítása.
@@ -293,14 +186,14 @@ A tanítványok egy és csak egy mester alatt tanulhatnak, azonban a mestereknek
 Minden mester a saját \emph{dódzsójában} (edzőterem, klub) oktatja tanítványait, melynek van neve.
 Az előző két mondat állításaiból következik, hogy egy tanítvány egyszerre pontosan egy dódzsóban tanulhat.
 
-Ezen leírás alapján elkészíthetjük a domén meta-modelljét az \gls{EMF} Ecore diagram alapú modellezőjének segítségével.
+Ezen leírás alapján elkészíthetjük a domén metamodelljét az \gls{EMF} Ecore diagram alapú modellezőjének segítségével.
 Ennek mikéntjéről bővebb leírást a \cite{VogelEMF} ad.
-Az általam elkészített meta-modellt a \ref{fig:karateMetaModel}. ábra mutatja.
+Az általam elkészített metamodellt a \ref{fig:karateMetaModel}. ábra mutatja.
 %
 \begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{figures/ecore-karate-metamodel-diag.pdf}
-\caption{Karate meta-modell}
+\caption{Karate metamodell}
 \label{fig:karateMetaModel}
 \end{figure}
 %
@@ -309,7 +202,7 @@ Jól láthatóak a kapcsolatok a modell főbb elemei közt: a Master és Student
 A KarateStyle a lehetséges karate stílusok felsorolása.
 A modell gyökere a World osztály, ez tartalmazza a Karateka-kat, akik közül a Master típusúak tartalmazzák a Dojo-kat.
 
-Az Ecore meta-modell alapján elkészíthetjük a Genmodel meta-modellt, amelyből generálhatjuk a modellünk egyedeinek létrehozásához és manipulálásához szükséges Java kódot és az Eclipse-be beépülő szerkesztő komponenseket, melyek segítenek a példánymodellek vizuális konstrukciójában.
+Az Ecore metamodell alapján elkészíthetjük a Genmodel metamodellt, amelyből generálhatjuk a modellünk egyedeinek létrehozásához és manipulálásához szükséges Java kódot és az Eclipse-be beépülő szerkesztő komponenseket, melyek segítenek a példánymodellek vizuális konstrukciójában.
 A következő lépésben az elkészült komponenseket -- az EMF-IncQuery komponenseivel együtt -- betöltjük az Eclipse környezet egy újabb példányába a már említett módon (futtatás Eclipse Application-ként).
 Itt varázsló segítségével létrehozhatjuk a modellünk egy új egyedét, melyet feltölthetünk a szükséges tartalommal.
 Én a példánymodellemet a \emph{The Karate Kid} (A karate kölyök) című 1984-es kultuszfilm alapján készítettem el, töltöttem fel adatokkal.
@@ -357,15 +250,136 @@ A nyelv a következő fontosabb elemekből épül fel \cite{EclipseOrgIncQueryLa
 \begin{description}
 \item[Csomag:] a \texttt{package} direktíva -- a Java-hoz hasonlóan -- jelzi, hogy melyik csomag tartalmazza a fájlban lévő mintákat
 \item[Importok:] \texttt{import} direktívákkal adhatjuk meg azokat az \gls{EMF} csomagokat, melyeknek elemeire hivatkozni szeretnénk a lekérdezésekben
-\item[Minta:] a \texttt{pattern} kulcsszóval bevezetett minták olyan \emph{predikátumok}, melyeknek lehetnek paramétereik -- melyeknek opcionálisan megadhatjuk a típusát is -- és legalább egy törzsük van; a minta törzsei diszjunktak, vagyis a törzsek logikai VAGY kapcsolatban állnak egymással
-\item[Minta-törzs:] a kapcsos zárójelek által határolt minta-törzs legalább egy kényszerből és valahány lokális változóból áll; a törzsben lévő kényszerek logikai ÉS kapcsolatban állnak egymással 
+\item[Minta:] a \texttt{pattern} kulcsszóval bevezetett minták olyan \emph{predikátumok}, melyeknek lehetnek paramétereik -- melyeknek opcionálisan megadhatjuk a típusát is --, annotációik, és legalább egy törzsük van; a minta törzsei logikai VAGY kapcsolatban, vagyis diszjunkcióban állnak egymással
+\item[Mintatörzs:] a kapcsos zárójelek által határolt mintatörzs legalább egy kényszerből és valahány lokális változóból áll; a törzsben lévő kényszerek logikai ÉS kapcsolatban állnak egymással 
 \item[Kényszer:] kényszerek segítségével adhatóak meg a változók tulajdonságai és a közöttük lévő kapcsolatok; egy vagy több változóhivatkozás található bennük
-\item[Változó:] értéke megadható, vagy mintaillesztésnél helyettesítődik be; a minta paramétereit \emph{szimbolikus}, a törzsekben találhatóakat pedig \emph{lokális} változóknak nevezzük
+\item[Változó:] értéke megadható, vagy mintaillesztésnél helyettesítődik be; a minta paramétereit \emph{paraméterváltozóknak}, a csak a törzsekben találhatóakat pedig \emph{lokális változóknak} nevezzük; a lokális változók első említésükkor impliciten deklarálódnak
+\item[Annotáció:] a mintához kapcsolható metaadat; szintaxisa és szemantikája a Java nyelv annotációit követi
 \end{description}
 
-%A kényszereknek az alábbi fajtái léteznek a nyelvben:
-%\begin{description}
-%\item[Összehasonlítás kényszer (\texttt{CompareConstraint}):] ez a kényszer két kifejezés egyenlőségét vagy egyenlőtlenségét határozza meg
-%\item[Típuskényszer (\texttt{EClassifierConstraint}):] ez a kényszer a paraméterének típusát határozza meg; példa: a \texttt{Student(student);} kifejezés a \texttt{student} változó típusát \textit{Student}-ként határozza meg
-%\end{description}
-%\todo{befejezni vagy törölni}
+A \ref{lst:isStudentOfMiyagiPattern}. kódlistán a nyelv szinte minden elemére találhatunk példát.
+Az kód 1. sora jelzi, hogy a minta a \texttt{karate.incquery} csomag része.
+A 3. sorban a \texttt{http://karate/1.0} névtér importálása történik, melyre a \texttt{Student} típus használatához van szükség.
+Az 5-7. sor definiálja az \texttt{isStudentOfMiyagi} nevű mintát, melynek egy \texttt{student} névre hallgató paramétere van.
+A \texttt{student} paraméterváltozó típusa (\texttt{Student}) expliciten van megkötve a paraméterlistán.
+A minta -- esetünkben egyetlen -- törzse az egyenlőségjel utáni nyitó, és a kód végén található záró kapcsos zárójelek közötti rész.
+Itt találhatóak a mintatörzs kényszerei, amiből esetünkben csak egy van.
+A \texttt{Student.master.name(student, "Kesuke Miyagi")} kényszer egy útvonal-kifejezés kényszer (path expression constraint), mely azt a feltételt fejezi ki, hogy a \texttt{student} változóba csak olyan érték kerülhet, amely egyrészt \texttt{Student} típusú, másrészt a \texttt{master} tulajdonságának a neve (\texttt{name} tulajdonságának értéke) a \textit{``Kesuke Miyagi''} sztring.
+
+A keresőminta egy törzse akkor \emph{illeszkedik}, ha sikerül olyan változóbehelyettesítést találni, amelyre a törzsben található kényszerek ki vannak elégítve.
+Maga a keresőminta pedig akkor illeszkedik, ha paraméterváltozóinak van olyan behelyettesítése, melyre legalább az egyik törzse illeszkedik.
+
+A fentiek alapján a \ref{lst:isStudentOfMiyagiPattern}. kódlistán látható keresőminta a \ref{fig:karateInstanceModel}. ábrán látható példánymodell egyetlen elemére illeszkedik, ahogyan azt a találati eredmények is mutatják (\ref{fig:karateQueryResult}. ábra).
+
+A nyelvben az eddig bemutatottal együtt összesen öt kényszertípus található, melyet az alábbi szekciók mutatnak be röviden.
+
+\subsubsection{Ellenőrzés kényszer (check constraint)}
+Ez a kényszer egy tetszőleges, igaz-hamis értékű Java kifejezést értékel ki a paramétereire.
+Ajánlott a kifejezésnek mellékhatás mentesnek lennie, mivel csak ekkor garantálható a helyes működés \cite{EclipseOrgIncQueryLang}.
+
+\noindent Általános formája: \texttt{check(\textit{<Java kifejezés>})}
+
+\noindent Példa:
+\begin{lstlisting}
+package karate.incquery
+
+import "http://karate/1.0"
+
+pattern overlongStyles(style : KarateStyle) = {
+    check(style.literal.length > 10);
+}
+\end{lstlisting}
+    
+\subsubsection{Összehasonlítás kényszer (compare constraint)}
+Ez a kényszer a jobb és bal oldalán álló két kifejezés egyenlőségét vagy egyenlőtlenségét fejezi ki.
+
+\noindent Általános formája:
+\begin{description}
+\item[egyenlőség:] \texttt{\textit{<kifejezés>} == \textit{<kifejezés>}}
+\item[egyenlőtlenség:] \texttt{\textit{<kifejezés>} != \textit{<kifejezés>}}
+\end{description}
+
+\noindent Példa:
+\begin{lstlisting}
+package karate.incquery
+
+import "http://karate/1.0"
+
+pattern stylesOtherThanGojuRyu(style : KarateStyle) = {
+    style != KarateStyle::GojuRyu; 
+}
+\end{lstlisting}
+    
+\subsubsection{Típuskényszer (EClassifier constraint)}
+Ez a kényszer a paraméterének típusát határozza meg.
+Azt már láttuk, hogy egy minta paraméterváltozójának típusát megadhatjuk explicit módon a paraméterlistán.
+Ez a megadás azonban egy ekvivalens típuskényszer alkalmazásával helyettesíthető.
+A lokális változók típusának explicit megkötésére a típuskényszer a legalkalmasabb eszköz, ám még így is viszonylag ritkán fordul elő, mivel egy változó típusa az egyéb kényszerekben betöltött szerepe alapján általában kikövetkeztethető.
+
+\noindent Általános formája: \texttt{\textit{<típus>}(\textit{<változó>})}
+
+\noindent Példa:
+\begin{lstlisting}
+package karate.incquery
+
+import "http://karate/1.0"
+
+pattern masters(karateka) = {
+    Master(karateka);
+}
+\end{lstlisting}
+
+\subsubsection{Útvonal-kifejezés kényszer (path expression constraint)}
+Ez a kényszer két paramétere egy vagy több modell-élen keresztüli kapcsolatát fejezi ki.
+A kényszer ennek megfelelően egy fejből, és egy vagy több farokból áll.
+A fej egy típus, és a kényszer első paraméterének típusát határozza meg.
+Az első farok a fej egy tulajdonsága (attribútuma vagy referenciája), mely szintén meghatároz egy típust: a tulajdonság típusát.
+A következő farok -- ha van -- ennek a típusnak egy tulajdonsága, és így tovább a további farkakra.
+Az utolsó farok a kényszer második paraméterét határozza meg.
+
+\noindent Általános formája: \texttt{\textit{<típus>}.\textit{<él$_1$>}.$\cdots$.\textit{<él$_n$>}(\textit{<kifejezés>}, \textit{<kifejezés>})}
+
+\noindent Példa: lásd \ref{lst:isStudentOfMiyagiPattern}. kódlista
+
+\subsubsection{Minta kompozíciós kényszer (pattern composition constraint)}
+Ez a kényszer egy már meglévő minta felhasználását, úgymond \emph{hívását} teszi lehetővé.
+A kényszer akkor teljesül, ha a felhasznált minta illeszkedik a paramétereire.
+A minta hívása lehet \emph{negatív} (negative application condition, \gls{NAC}) is, amit a \texttt{neg} prefix jelez.
+Ebben az esetben a kényszer akkor teljesül, amikor a minta nem illeszkedik a paramétereire.
+
+\noindent Általános formája: \texttt{\textit{[}neg\textit{]} find \textit{<minta>}(\textit{<kifejezés$_1$>}, $\cdots$, \textit{<kifejezés$_n$>})}
+
+\noindent Példa -- a már megismert \texttt{isStudentOfMiyagi} minta tölti be a meglévő minta szerepét:
+\begin{lstlisting}
+package karate.incquery
+
+import "http://karate/1.0"
+
+pattern isStudentOfMiyagi(student : Student) = {
+    Student.master.name(student, "Kesuke Miyagi");
+}
+
+pattern notStudentOfMiyagi(student : Student) = {
+    neg find isStudentOfMiyagi(student);
+}
+\end{lstlisting}
+
+\vspace{\baselineskip}\noindent % section continuation hack
+A kényszerek paramétereiként megjelenő kifejezések -- kivéve az ellenőrzés kényszer Java kifejezéseit -- négy különböző formában jelennek meg:
+\begin{description}
+    \item[változóreferencia:] hivatkozás egy lokális vagy paraméterváltozóra; 
+    \item[érték literál:] lehet igaz-hamis érték, egész szám, lebegőpontos szám, vagy szöveg, illetve kifejezések egy listája (\texttt{\{\textit{<kifejezés$_1$>}, $\cdots$, \textit{<kifejezés$_n$>}\}})
+    \item[felsorolható típus literál:] hivatkozás felsorolt típus (enum) elemére; egy példát az összehasonlítási kényszer leírásánál találhatunk rá (\texttt{KarateStyle::GojuRyu})
+    \item[aggregátor kifejezés:] ez a kifejezés egy érték származtatását teszi lehetővé a minta változóinak függvényében; két típusa létezik:
+    \begin{itemize}
+        \item a \texttt{count} kifejezés egy minta illeszkedéseinek számát adja vissza; szintaxisa: \mbox{\texttt{count find \textit{<minta>}(\textit{<kifejezés$_1$>}, $\cdots$, \textit{<kifejezés$_n$>})}}
+        \item \begin{sloppypar}az \texttt{eval} kifejezés egy tetszőleges Java kifejezést értékel ki; szintaxisa: \mbox{\texttt{eval(\textit{<Java kifejezés>})}}\end{sloppypar}
+    \end{itemize}
+\end{description}
+
+A lokális változók egy speciális esete az \emph{egyszer használatos változó}.
+Ilyen változót abban az esetben használunk, ha a változó értéke számunkra lényegtelen, de a szintaxis megkívánja egy változó jelenlétét.
+Az ilyen változókra mintatörzsenként pontosan egy hivatkozás lehet.
+Ezek a változók onnan ismerhetőek fel, hogy nevük egy alulvonással kezdődik, például \texttt{\_dontcare}.
+Egy speciális eset az \emph{anonim változó}, amelyre egy alulvonás karakterrel (\texttt{\_}) tudunk hivatkozni.
+Ez többször is szerepelhet egy törzsön belül, ám minden említése egyedi változónak számít.

@@ -11,23 +11,45 @@ Ráadásul nem árt, ha mindezek mellett szoftverünk jól dokumentált a felhas
 
 \section{Modellezés}
 
+A \emph{modell} definíciója szerint egy rendszer, elmélet, vagy jelenség leírása, mely rendelkezik annak ismert, vagy kikövetkeztetett tulajdonságaival és a jellemzői további vizsgálatára használható \cite{dict:Model}.
 A mérnöki diszciplínákban szinte mindenhol alkalmaznak matematikai vagy egyéb modelleket a komplex problémák leírására, vizualizálására.
 Ezek a modellek azáltal segítik a mérnökök munkáját, hogy a -- valós vagy elképzelt -- világnak csak a problémához szorosan kapcsolódó, a megoldás szempontjából lényeges részeit reprezentálják -- írják le vagy jelenítik meg.
 A modellek manipulációján keresztül a mérnököknek lehetősége adódik ötleteiket kipróbálni, terveiket letesztelni különösebb erőforrás ráfordítás nélkül.
-Nem meglepő módon, mint modern mérnöki tudomány, az informatika sem képez kivételt ez alól.
 
-A \emph{modell-vezérelt szoftverfejlesztés} (model-driven software development, \gls{MDSD}) egy olyan, manapság széles körben elterjedt \gls{CASE} technika, mely megkönnyíti mind a szoftverek előállítását, mind azok későbbi továbbfejlesztését, karbantartását \cite{MDSD:TEM06}.
+A modellezés tehát olyan eszközt biztosít számunkra, mellyel egy adott rendszerről következtetéseket vonhatunk le.
+Felmerülhet a kérdés, hogy vajon milyen eszközzel tudjuk magukat a modellezéshez használt eszközöket vizsgálni?
+A válasz szinte triviális: a modellező eszközöket is tudjuk modellezni.
+Ez a gondolat vezet el a \emph{modellezési szintek} fogalmához.
+A dolgozat kapcsán az alábbi három modellezési szintet érdemes megkülönböztetnünk:
+\begin{itemize}
+    \item a \emph{(példány-)modellek} szintje a legalacsonyabb, itt találhatóak a konkrét rendszereket reprezentáló modellek (példa: a $2 + 3i$ komplex szám két valós számból álló tömbként a számítógép memóriájában)
+    \item eggyel magasabb absztrakciós szintet képvisel a példánymodellek struktúráját leíró \emph{metamodellek} szintje (példa: a komplex számokat leíró \gls{UML} osztálydiagram)
+    \item és végül a metamodellek általános felépítését specifikáló \emph{meta-metamodell} szintről (példa: az \gls{UML} specifikációja)
+\end{itemize}
+Nyilvánvalóan a lista a magasabb absztrakciós szintek irányába tetszőleges hosszan folytatható, amíg az aktuális legmagasabb szinten lévő modelleket leíró közös struktúra meghatározható.
+Továbbá az egyes szinteken található modellek nagyban függenek a modellezendő rendszer megválasztásától, emiatt ugyanaz a modell két különböző választás esetén két különböző szintet is képviselhet.
+
+Nem meglepő módon, mint modern mérnöki tudomány, az informatika is alkalmaz modelleket.
+A szoftverrendszerek tervezésénél régóta használnak többféle modellt:
+\begin{itemize}
+	\item adatszerkezeti modell (objektummodell, osztályhierarchia, öröklődés, stb.)
+	\item funkcionális modell (adatforrások, -tárolók, -nyelők, -folyamok)
+	\item dinamikus modell (állapotok, események, kommunikáció) \cite{Kondorosi07}.
+\end{itemize}
+Az ezen modelleken alapuló nézetek és diagramok -- osztályhierarchia, külső felhasználók, objektumok együttműködése, tevékenységek, események időbelisége, objektumok állapota, rendelkezésre álló szoftver- és hardver erőforrások -- nélkül a tervezés a néha akár több millió kódsorból álló szoftverrendszerek esetében áttekinthetetlen, a rendszer implementálás előtti tesztelése, viselkedésének elemzése, idő- és költségbecslések elvégzése kivitelezhetetlen volna.
+
+A modellezés fejlődése a szoftverfejlesztésben a 2000-es évekre elvezetett a \emph{modell-vezérelt paradigmák} -- az általános model-driven software developmenttől (\gls{MDSD}), a speciálisabb model-driven engineeringen (\gls{MDE}) át, az \gls{OMG} által konkrétan specifikált model-driven architecture-ig (\gls{MDA}) -- és eszközrendszerek kifejlődéséhez \cite{OMG:MDA:FAQ,Schmidt:MDE:10.1109/MC.2006.58,MDSD:TEM06}.
+A modell-vezérelt szoftverfejlesztés (\gls{MDSD}) egy olyan, manapság széles körben elterjedt \gls{CASE} technika, mely megkönnyíti mind a szoftverek előállítását, mind azok későbbi továbbfejlesztését, karbantartását \cite{MDSD:TEM06}.
 A technika alkalmazása során a fejlesztők először az adott feladat alapján egy domén-specifikus, magas szintű, platformfüggetlen \emph{modellt hoznak létre}.
 Ezután az elkészült modellt különböző szoftvereszközök segítségével \emph{transzformálják} más alakokba, például dokumentációvá, grafikonokká, programkóddá, végrehajtható programokká vagy egyéb modellekké.
 Az ilyen szoftveres, automatizált transzformáció nagy előnye, hogy a fejlesztők által meghatározott módon képes a modell több kapcsolódó reprezentációja közötti -- bizonyos esetekben akár kétirányú -- konzisztencia megőrzésére.
 Teszi mindezt hosszútávon kevesebb befektetett munkával, a kiküszöbölt hibalehetőségek számáról nem is beszélve.
 Emellett az egyes transzformációk -- összeillő ki- és bemenetek mentén -- össze is kapcsolhatóak, így egyszerűbb transzformációkból egész transzformációs csővezetékeket (transformation pipeline) hozhatunk létre.
+A transzformációk megadásához általában egy modelltranszformációs nyelvet (\gls{MTL}) használunk, amilyen pl. a VIATRA2 Textual Command Language \cite{Balogh:2006:AMT:1141277.1141575}.
 
 A modelltranszformációk egy speciális esete a \emph{lekérdezés} (query), mely a modell reprezentációján nem változtat, viszont csak azon elemeit adja vissza, melyek kielégítenek egy -- akár többszörösen összetett -- feltételt.
+Az ilyen modell-lekérdezéseket felhasználhatjuk többek között a modell inkonzisztenciáinak kimutatására, származtatott attribútumok és kapcsolatok implementálására, modelltranszformációk szabály alapú vezérlésére, vagy nézetek deklaratív definiálására.
 
-%------------
-% Indokoltság
-%------------
 Mint minden munkafolyamat, amelyben emberi közreműködésre van szükség, a modellek készítése és manipulálása, és a transzformációk leírása is temérdek lehetőséget ad az embernek hibák elkövetésére.
 A mérnökök ezért megpróbálják az ilyen tevékenységek mennyiségét csökkenteni azáltal, hogy előre elkészített és fokozottan ellenőrzött komponenseket biztosítanak a fejlesztők számára függvénykönyvtárak vagy keretrendszerek formájában.
 A fennmaradó feladatokat pedig olyan eszközökkel próbálják támogatni, melyek segítik az ember és a gép közötti interakciót (pl. releváns dokumentáció megjelenítésével, választási lehetőségek felajánlásával), illetve automatizáltan képesek ellenőrizni annak eredményét.
@@ -45,8 +67,8 @@ Az egyik ilyen hibaelkerülési módszer, mellyel a legtöbb modern fordítóban
 \section{Statikus analízis}
 
 A \emph{statikus analízis} egy gyűjtőfogalom a fejlesztési időben rendelkezésre álló adatok alapján elvégezhető vizsgálatokra és információgyűjtésre, melyek a szintaxis kiemelésétől egészen az olyan formális módszerekig terjedhetnek, melyek a kód bizonyos szemantikai tulajdonságait matematikailag bizonyítják.
-A spektrum egyik végén található szintaxis kiemelés, mely szinte minden magára valamit adó szövegszerkesztőben megtalálható, szigorúan véve statikus analízis ugyan, de közel sem nevezhető valódi vizsgálatnak.
-Egy fokkal kifinomultabb, már ténylegesen ellenőrzésnek nevezhető analízist végeznek az úgynevezett ``lint'' eszközök, melyek a kódban gyakran előforduló, de formálisan nem vagy csak nehezen bizonyítható hibákra, hibalehetőségekre hívják fel a fejlesztők figyelmét.
+A spektrum egyik végén található szintaxis kiemelés a statikus analízis vizsgálatok egyik legegyszerűbb formája, mely szinte minden magára valamit adó szövegszerkesztőben megtalálható.
+Egy fokkal kifinomultabbak, a már felületes szemantikai analízist is végező, úgynevezett ``lint'' eszközök, melyek a kódban gyakran előforduló, de formálisan nem vagy csak nehezen bizonyítható hibákra, hibalehetőségekre hívják fel a fejlesztők figyelmét.
 A spektrum másik végén álló formális módszerekkel leggyakrabban valós idejű és biztonságkritikus rendszereknél (forgalom- és járműirányítás, nukleáris és orvosi rendszerek) találkozhatunk \cite{Storey:1996:SCC:524721}.
 Ezeknél a rendszereknél emberi életek múlhatnak a szoftver helyes működésén, ezért az ellenőrzésekhez olyan technikákat használnak mint a modell ellenőrzés\footnote{A modell ellenőrzés -- a neve ellenére -- viszonylag kevéssé kötődik a dolgozat témájához.}, az adatfolyam analízis, az absztrakt interpretáció, a szimbolikus végrehajtás vagy a Hoare logika.
 
@@ -64,14 +86,12 @@ Tehát a statikus analízis sem királyi út, érdemes futásidejű módszerekke
 Az eddig említésre került statikus vizsgálatok mind a fejlesztés segítésére vagy hibák, lehetséges hibaforrások felkutatására irányultak, még a fejlesztés befejezése előtt.
 Ám a statikus analízis segítségével kinyert információk alapján javítható a futásidejű működés hatékonysága is, hiszen az elemzés során olyan optimalizációs lehetőségekre lelhetünk, melyeket beépíthetünk programunkba -- vagy éppen elhagyhatunk miatta részeket, ahogyan azt a nem elérhető kód elhagyásánál (dead code elimination) tesszük.
 
-A statikus analízis azonban nem csak programokon értelmezhető fogalom, alkalmazható modellek vizsgálatára is, például előre nem ismert példánymodellek tulajdonságainak vizsgálatára meta-modelljük alapján, hiszen a meta- és a példánymodell kapcsolata hasonló a forráskód és a futó program kapcsolatához.
+A statikus analízis azonban nem csak programokon értelmezhető fogalom, alkalmazható modellek vizsgálatára is, például előre nem ismert példánymodellek tulajdonságainak vizsgálatára metamodelljük alapján, hiszen a meta- és a példánymodell kapcsolata hasonló a forráskód és a futó program kapcsolatához.
 
 \section{A dolgozat felépítése}
 
-%A szakdolgozat során a feladatom tehát olyan fejlesztési idejű vizsgálatokat végző komponensek tervezése és elkészítése az EMF-IncQuery lekérdezőnyelvéhez, melyek fejlesztési vagy végrehajtási időben hasznosíthatóak.
-
-A \ref{chap:techPrim}. fejezetben először bővebben írok a modell-vezérelt szoftverfejlesztésről, és a hozzá szorosan kapcsolódó Eclipse Modeling Framework-ről.
-Ezután bemutatom az EMF-IncQuery-t és példákon keresztül ismertetem a használatát és a tárgynyelvét.
+A \ref{chap:techPrim}. fejezetben először írok a modell-vezérelt szoftverfejlesztést támogató, és az EMF-IncQuery alapjául szolgáló Eclipse platformról és Eclipse Modeling Framework-ről.
+Ezután bemutatom az EMF-IncQuery-t és példákon keresztül ismertetem a használatát és a lekérdezőnyelvét.
 
 A \ref{chap:varUsage}. fejezetben olyan ellenőrzéseket tervezek és készítek el, melyek az EMF-IncQuery lekérdezőnyelvében található minták változóira történő hivatkozások minőségi és mennyiségi elemzése alapján hívják fel a fejlesztők figyelmét hibákra és hibalehetőségekre.
 

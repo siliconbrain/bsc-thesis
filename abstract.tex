@@ -3,20 +3,19 @@
 %----------------------------------------------------------------------------
 \chapter*{Kivonat}\addcontentsline{toc}{chapter}{Kivonat}
 
-A dolgozat a modell-vezérelt szoftverfejlesztés során, modell-lekérdezések definiálásakor előforduló hibalehetőségek eseteit vizsgálja, konkrét környezetként az Eclipse Modeling Framework (EMF) platformjára épülő, a BME Méréstechnika és Információs Rendszerek Tanszékének Hibatűrő Rendszerek Kutatócsoportja által kidolgozott EMF-IncQuery lekérdező rendszer esetére.
-Ez a rendszer EMF modellek felett teszi lehetővé gráfminta alapú deklaratív lekérdezések elvégzését.
+A modell-vezérelt szoftverfejlesztés a tradicionális programozásnak egy olyan, manapság már az iparban is széles körben alkalmazott alternatívája, mely a szoftver rendszerek modellezésére összpontosít.
+A technika alapötlete, hogy a fejlesztők modellezőeszközök segítségével adják meg a rendszer specifikációját, majd az így létrehozott modelleket különböző formákba alakítják automatizált transzformáció segítségével.
+A modelltranszformációk egy speciális esete a modell-lekérdezés, amivel a modell bizonyos feltételt kielégítő elemeit szűrhetjük ki, kereshetjük meg.
 
-A dolgozat lekérdezéseknek az EMF-IncQuery tárgynyelvén történő megfogalmazása során elkövethető emberi hibák elkerülése céljából a lekérdezőnyelv statikus analízisével foglalkozik.
-A statikus analízis segítségével, fejlesztési időben rendelkezésre álló adatok alapján elvégezhető vizsgálatokkal hívja fel a fejlesztők figyelmét a lekérdezésekben található hibákra, hibalehetőségekre.
+A szoftverfejlesztés ezen módszertanához nyújtanak segítséget az Eclipse Modeling Project keretében fejlesztett eszközök, amilyen például az Eclipse Modeling Framework (EMF), vagy az erre épülő EMF-IncQuery.
+A BME Méréstechnika és Információs Rendszerek Tanszékének Hibatűrő Rendszerek Kutatócsoportja által kidolgozott EMF-IncQuery gráfminta alapú modell-lekérdezések deklaratív specifikálását és hatékony végrehajtását teszi lehetővé EMF modellek felett.
 
-A dolgozat a tématerületet ismertető első fejezet után a második fejezetben beágyazza az EMF-IncQuery keretrendszert az EMF kontextusába, majd példákon keresztül ismerteti annak használatát és bemutatja lekérdezőnyelvét.
+Ahogy a szoftverfejlesztés más munkafolyamatai, a modellek, modelltranszformációk és modell-lekérdezések leírása is sok lehetőséget ad a fejlesztőknek hibák elkövetésére.
+Erre nyújthatnak megoldást a statikus analízis módszerei, melyek segítségével fejlesztési időben rendelkezésre álló információkat nyerhetünk ki rendszerünkből.
+Ezen vizsgálatok eredménye alapján pedig felhívhatjuk a fejlesztők figyelmét az esetleges hibákra, hibalehetőségekre.
+A problémák feltárása mellett, a statikus analízis során nyert információk felhasználhatóak a végrehajtási teljesítmény javítására is.
 
-A harmadik fejezet olyan ellenőrzések megtervezését és a kivitelező komponens elkészítését mutatja be, amelyek az EMF-IncQuery lekérdezőnyelvében található minták változóira történő hivatkozások minőségi és mennyiségi elemzése alapján tárják fel a fejlesztői hibalehetőségeket.
-
-A negyedik fejezet a lekérdezések és a kapcsolódó domén-modell közötti lehetséges ellentmondásokat a mintákban található változók között fennálló funkcionális függőségeken keresztül ellenőrző statikus vizsgálatokat mutatja be.
-Végül egy esettanulmányon keresztül szemlélteti a fejezetben ismertetett elemzések elvégzését segítő funkcionális függőség elemző kód felhasználását a lekérdezések végrehajtásának hatékonyabbá tételére.
-
-A dolgozatot az elkészült komponensek továbbfejlesztési lehetőségeinek áttekintése zárja.
+A dolgozatban először bemutatom az említett technológiákat, majd statikus analízisen alapuló ellenőrzéseket tervezek és valósítok meg az EMF-IncQuery lekérdezőnyelvéhez, illetve statikus analízis segítségével megpróbálom növelni a lekérdezések végrehajtásának hatékonyságát.
 
 \vfill
 
@@ -25,20 +24,18 @@ A dolgozatot az elkészült komponensek továbbfejlesztési lehetőségeinek át
 %----------------------------------------------------------------------------
 \chapter*{Abstract}\addcontentsline{toc}{chapter}{Abstract}
 
-The thesis analyzes the possible mistakes made in the definitions of model queries in context of model-driven software development.
-As a concrete environment the EMF-IncQuery system has been selected that was developed by the Fault Tolerant Systems Research Group of the Department of Measurement and Information Systems at Budapest University of Technology and Economics.
-This system enables the performance of graph pattern based queries on EMF models.
+Model-driven software development is a widely used alternative to traditional programming that centers itself on modeling software systems.
+The idea behind the technique is that developers use modeling tools to specify the system at hand and then convert the resulting models to other forms with the help of automatic transformation.
+Model query is a special case of model transformation that lets us filter out, search for elements of the model which satisfy some conditions.
 
-The thesis deals with static analysis of the query language of EMF-IncQuery to avoid human mistakes that can be made while composing queries using the language.
-With the help of static analysis, it draws developers' attention to errors and possible mistakes occurring in queries with inspections based on data available at development time.
+Tools, such as the Eclipse Modeling Framework (EMF) or EMF-IncQuery, developed as part of the Eclipse Modeling Project support this methodology of software development.
+EMF-IncQuery, developed by the Fault Tolerant Systems Research Group of the Department of Measurement and Information Systems at Budapest University of Technology and Economics, provides a framework for declarative definition and efficient execution of graph pattern based model queries.
 
-The thesis, after introducing the topic in the first chapter, in the second chapter embeds the EMF-IncQuery framework into the context of EMF then demonstrates its usage through examples and presents its query language.
+Like other workflows of software development, the definition of models, model transformations and model queries present many opportunities for developers to make mistakes.
+A solution for this might be the use of static analysis methods that help extract information from the system available at development-time.
+Based on the result of these inspections, developers' attention can be called to definite and possible mistakes.
+Besides the ability to reveal these problems, the information gained from static analysis could also be used to improve query execution performance.
 
-The third chapter introduces the design and implementation of such an inspection component that reveals developers' mistakes based on the qualitative and quantitative analysis of references to patterns' variables.
-
-The fourth chapter introduces static analyses that check for possible inconsistencies between the query and the associated domain-model through the functional dependencies existing among the variables of the patterns.
-Finally demonstrates, through a case study, the use of the functional dependency checking code that supported the performance of analyses presented in the chapter for improving the efficiency of query execution. 
-
-The thesis closes with the review of possible further development of the realized components.
+In the thesis, I'll first present the aforementioned technologies, then design and implement verifications based on static analysis for the query language of EMF-IncQuery and attempt to increase the efficiency of query execution with the help of static analysis.
 
 \vfill
