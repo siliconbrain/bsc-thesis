@@ -111,12 +111,12 @@ A tartalmazást szimbolizáló éleken megjelenik az UML-ből ismert teli rombus
 Az \gls{EMF} modellek a grafikus szerkesztőn kívül az alábbi módokon is megadhatóak:
 \begin{enumerate}
 	\item Java Interfaces
-	\item UML Class Diagram
+%	\item UML Class Diagram
 	\item XML Schema
 \end{enumerate}
 
 A dolgozatban kulcsszerepet játszó Eclipse Modeling Framework (\gls{EMF}) bemutatásának összefoglalásaként a következőket emelhetjük ki \cite{EMFFundamentals}:
-Az \gls{EMF} a legkézenfekvőbb modellező eszköz az Eclipse számára, mivel nagyszerűen beépül és együttműködik a környezettel és az azt körülvevő szoftver-ökoszisztémával.
+Az \gls{EMF} a legkézenfekvőbb modellező eszköz az Eclipse számára, mivel tökéletesen beépül és együttműködik a környezettel és az azt körülvevő szoftver-ökoszisztémával.
 A modellezést és a programozást keverten is képes kezelni növelve ezáltal mindkettő hatásfokát.
 A szoftverfejlesztés termelékenységét növeli és megkönnyíti az integrációt.
 Mindezek alapján az Eclipse modell alapú fejlesztésének és adatintegrációjának az alapja. 
@@ -152,9 +152,9 @@ Az EMF-IncQuery felépítését a \ref{fig:EMFIncQueryStructure}. ábra mutatja 
 A megadott lekérdezésen (Query specification) alapulva mintaellenőrző pluginok generálódnak (Generated pattern matcher), melyek könnyen integrálhatók egy meglévő Eclipse-alapú alkalmazásba (Application, Application code).
 A lekérdezés megadását Xtext 2-alapú szerkesztő támogatja, amely fejlett szintaxis kiemeléssel, kódkiegészítéssel és formula ellenőrzéssel rendelkezik.
 Ezek a pluginok az EMF-IncQuery API-n keresztül elérik a rendszer belső funkcionalitását.
-Az API-ban a Validation Engine, modell-helyesség ellenőrző motor körbeveszi az \gls{EMF} Validációs szolgáltatást (Validation Service), hogy EMF-IncQuery-alapú online jól formáltság ellenőrzőket nyújtson a szabványos Eclipse hiba-markerek révén.
+Az API-ban a Validation Engine, modell-helyesség ellenőrző motor körbeveszi az \gls{EMF} Validációs szolgáltatást (Validation Service), hogy EMF-IncQuery-alapú online jólformáltság ellenőrzőket nyújtson a szabványos Eclipse hiba-markerek révén.
 Az interpretáló mintaillesztő (Interpretative pattern matcher) közvetlenül Java kódból indított ad-hoc lekérdezések gyors végrehajtásához nyújt elérési pontot.
-Az API nyújtja továbbá a származtatott sajátosságok támogatását (Derived feature support).
+Az API nyújtja továbbá a származtatott tulajdonságok támogatását (Derived feature support).
 A keretrendszerben a Base komponens gyakran használt alacsony szintű inkrementális lekérdezéseket nyújt, mint pl. a már említett egyed felsorolások, és fordított irányú navigálás egyirányú hivatkozásokon.
 A lekérdezések inkrementális kiértékelését és életciklus kezelését a RETE motor szolgáltatja (RETE Core).
 Az IncQuery Core adja az EMF-IncQuery keretrendszer magját.
@@ -235,7 +235,7 @@ Ha a mintát beregisztráljuk az EMF-IncQuery \emph{Query Explorer} nézetébe �
 \begin{figure}[htb]
 \centering
 \includegraphics[width=\textwidth]{figures/karate-query-result.png}
-\caption{A keresés eredménye}
+\caption{A lekérdezés eredménye}
 \label{fig:karateQueryResult}
 \end{figure}
 
